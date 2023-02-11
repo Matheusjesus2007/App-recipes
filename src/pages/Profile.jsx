@@ -1,13 +1,13 @@
 import React from 'react';
 import Header from '../components/Header';
 
-function Drinks() {
+function Profile() {
   return (
     <>
-      <Header title="Drinks" />
-      <div>Drinks</div>
+      <Header title="Profile" />
+      <div>Profile</div>
     </>
   );
 }
 
-export default Drinks;
+export default Profile;
