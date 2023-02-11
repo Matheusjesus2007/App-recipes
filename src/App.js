@@ -7,8 +7,8 @@ import FavoriteRecipes from './pages/FavoriteRecipes';
 import Login from './pages/Login';
 import Meals from './pages/Meals';
 import Profile from './pages/Profile';
-import RecipeDetails from './pages/RecipeDetails';
-import RecipeInProgress from './pages/RecipeInProgress';
+import RecipeDetails from './components/RecipeDetails';
+import RecipeInProgress from './components/RecipeInProgress';
 
 function App() {
   return (
