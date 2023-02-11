@@ -42,7 +42,7 @@ function Header({ title }) {
         data-testid="search-input"
         type="text"
         value={ valueInputSearch }
-        onChange={ (e) => setValueInputSearch(e.target.value) }
+        onChange={ ({ target }) => setValueInputSearch(target.value) }
       />}
     </>
   );

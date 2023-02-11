@@ -27,13 +27,13 @@ function Login({ history }) {
 
   useEffect(() => {
     if (user.email.length > 0 && !isEmailValid) {
-      setErrorMessageEmai('Endereço de email invalido');
+      setErrorMessageEmai('Invalid email address');
     } else {
       setErrorMessageEmai('');
     }
 
     if (user.password.length > 0 && !isPasswordValid) {
-      setErrorMessagePassword('A senha deve ter pelo menos 6 caracteres');
+      setErrorMessagePassword('Password must be at least 6 characters long');
     } else {
       setErrorMessagePassword('');
     }

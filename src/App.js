@@ -1,4 +1,5 @@
 import React from 'react';
+import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import DoneRecipes from './pages/DoneRecipes';
 import Drinks from './pages/Drinks';
