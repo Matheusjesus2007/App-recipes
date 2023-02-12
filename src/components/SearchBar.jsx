@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { HeaderContext } from '../contexts/HeaderContext';
 import { RecipesContext } from '../contexts/RecipesContext';
-import { searchFetchDrinks, searchFetchMeals } from '../helpers/searchFetchSwitch';
+import { searchFetchDrinks, searchFetchMeals } from '../helpers/SearchFetchSwitch';
 
 function SearchBar({ history }) {
   const [selectedRadioButton, setSelectedRadioButton] = useState('');

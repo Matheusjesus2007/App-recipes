@@ -9,7 +9,8 @@ import RecipeCard from './RecipeCard';
 
 function Recipes({ history: { location: { pathname } } }) {
   const isMealsOrDrinks = pathname.slice(1);
-  const { allRecipes, setRenderRecipes, setAllRecipes } = useContext(RecipesContext);
+  const { allRecipes, setRenderRecipes,
+    setAllRecipes } = useContext(RecipesContext);
   const [categories, setCategories] = useState([]);
   const [existFilter, setExisfilter] = useState('');
 
