@@ -1,3 +1,7 @@
+body {
+  margin-bottom: 30px;
+}
+
 .footer {
   background-color: #464646;
   border-top: 3px solid rgb(38, 38, 38);
@@ -34,5 +38,11 @@
   background-color: #0145ac;
   bottom: 0;
   color: #ccc;
+  height: 30px;
   position: fixed;
+  width: 100%;
+}
+
+.completed {
+  text-decoration: line-through solid rgb(0, 0, 0);
 }

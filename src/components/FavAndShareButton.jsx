@@ -8,99 +8,69 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import { setFavoriteRecipesStorage } from '../helpers/SetStorageFunctions';
 import { RecipesContext } from '../contexts/RecipesContext';
 
-function FavAndShareButton({ index, idItem, type, history }) {
+function FavAndShareButton({ index, recipeId, type, history }) {
+  const duration = 500;
+  const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+
   const { location: { pathname } } = history;
   const { recipeDetailsRender } = useContext(RecipesContext);
   const [isCopied, setIsCopied] = useState(false);
-  const [isfavorite, setFavorite] = useState(false);
-  const [clickEvent, setClickEvent] = useState({});
+  const [isFavorite, setIsFavorite] = useState(false);
 
-  const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-
-  useEffect(() => {
-    const isFavorite = favoriteRecipes.some((recipe) => recipe.id === idItem);
-    return setFavorite(isFavorite);
-  }, [recipeDetailsRender]);
-
-  const timer = 500;
-  const disabledLinkCopied = () => {
-    setTimeout(() => { setIsCopied(false); }, timer);
+  const linkCopied = () => {
+    setIsCopied(true);
+    setTimeout(() => { setIsCopied(false); }, duration);
   };
 
-  const removeRecipe = () => {
-    const newData = favoriteRecipes.filter((recipe) => recipe.id !== idItem);
-    setFavorite(false);
-    localStorage.setItem('favoriteRecipes', JSON.stringify(newData));
+  const handleClickButtonShare = () => {
+    linkCopied();
+    clipboardCopy(`http://localhost:3000/${type}/${recipeId}`);
   };
 
-  const setFavoriteAndStorage = () => {
-    setFavorite(true);
+  const removeFavoriteRecipe = () => {
+    const newFavoriteRecipes = favoriteRecipes.filter((recipe) => recipe.id !== recipeId);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoriteRecipes));
+  };
+
+  const addFavoriteRecipe = () => {
     setFavoriteRecipesStorage(recipeDetailsRender);
   };
 
-  const cinco = 5;
-  const vinteECinco = 25;
+  const handleClickButtonFavorite = () => {
+    if (isFavorite) {
+      removeFavoriteRecipe();
+    } else {
+      addFavoriteRecipe();
+    }
+    setIsFavorite(!isFavorite);
+  };
+
+  useEffect(() => {
+    const isRecipeInFavorites = favoriteRecipes.some((recipe) => recipe.id === recipeId);
+    return setIsFavorite(isRecipeInFavorites);
+  }, [recipeDetailsRender]);
 
   return (
     <div>
-      <button
-        type="button"
-        data-testid={ pathname.includes('favorite')
-          ? `${index}-horizontal-favorite-btn`
-          : 'favorite-btn' }
-        src={ isfavorite ? blackHeartIcon : whiteHeartIcon }
-        onClick={ isfavorite
-          ? () => removeRecipe()
-          : () => setFavoriteAndStorage() }
-      >
+      {isCopied && <div> Link copied!</div>}
+      <button onClick={ handleClickButtonFavorite }>
         <img
-          src={ isfavorite ? blackHeartIcon : whiteHeartIcon }
-          type="imge'svg+xml'"
-          alt={ isfavorite ? 'BlackHeart Icon' : 'WhiteHeart Icon' }
+          data-testid={ pathname.includes('favorite')
+            ? `${index}-horizontal-favorite-btn`
+            : 'favorite-btn' }
+          src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+          alt={ isFavorite ? 'BlackHeart Icon' : 'WhiteHeart Icon' }
         />
       </button>
-      <button
-        type="button"
-        data-testid={ pathname.includes('favorite')
-          ? `${index}-horizontal-share-btn`
-          : 'share-btn' }
-        id="copy-button"
-        src={ shareIcon }
-        onClick={ (e) => {
-          setIsCopied(true);
-          clipboardCopy(`http://localhost:3000/${type}/${idItem}`);
-          setClickEvent(e);
-          disabledLinkCopied();
-        } }
-        style={ {
-          borderRadius: '100%',
-          padding: '8px',
-          backgroundColor: 'lightblue',
-          border: 'none',
-        } }
-      >
+      <button onClick={ handleClickButtonShare }>
         <img
+          data-testid={ pathname.includes('favorite')
+            ? `${index}-horizontal-share-btn`
+            : 'share-btn' }
           src={ shareIcon }
-          type="image/svg+xml"
           alt="Share Icon"
         />
       </button>
-      {isCopied && (
-        <div
-          style={ {
-            backgroundColor: 'black',
-            borderRadius: '10px',
-            color: 'white',
-            padding: '2px 5px 2px 5px',
-            fontSize: '15px',
-            position: 'absolute',
-            top: clickEvent ? clickEvent.pageY - cinco : 0,
-            left: clickEvent ? clickEvent.pageX + vinteECinco : 0,
-          } }
-        >
-          Link copied!
-        </div>
-      ) }
     </div>
   );
 }

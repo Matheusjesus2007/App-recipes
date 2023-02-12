@@ -6,16 +6,19 @@ function RecipesProvider({ children }) {
   const [allRecipes, setAllRecipes] = useState([]);
   const [renderRecipes, setRenderRecipes] = useState([]);
   const [recipeDetailsRender, setDetailsRender] = useState([]);
+  const [recipeIngredients, setRecipeIngredients] = useState([]);
 
   const values = useMemo(() => ({
     allRecipes,
     renderRecipes,
     recipeDetailsRender,
+    recipeIngredients,
     setAllRecipes,
     setRenderRecipes,
     setDetailsRender,
-  }), [allRecipes, renderRecipes, recipeDetailsRender,
-    setAllRecipes, setRenderRecipes, setDetailsRender]);
+    setRecipeIngredients,
+  }), [allRecipes, renderRecipes, recipeDetailsRender, recipeIngredients,
+    setAllRecipes, setRenderRecipes, setDetailsRender, setRecipeIngredients]);
 
   return (
     <RecipesContext.Provider value={ values }>

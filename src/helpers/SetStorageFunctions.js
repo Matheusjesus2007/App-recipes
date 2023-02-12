@@ -1,10 +1,10 @@
-export const setStartRecipeStorage = (isMealsOrDrinks, idItem, recipeIngredients) => {
+export const setStartRecipeStorage = (isMealsOrDrinks, recipeId, recipeIngredients) => {
   const progressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
   localStorage.setItem('inProgressRecipes', JSON.stringify(
     { ...progressRecipes,
       [isMealsOrDrinks]: {
         ...progressRecipes[isMealsOrDrinks],
-        [idItem]: recipeIngredients,
+        [recipeId]: recipeIngredients,
       },
     },
   ));

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { RecipesContext } from '../contexts/RecipesContext';
 import { setStartRecipeStorage } from '../helpers/SetStorageFunctions';
 import { fetchDetailsDrinks, fetchDetailstMeals } from '../services/ApiRecipeDetails';
@@ -11,12 +11,12 @@ function RecipeDetails({ history, match }) {
   const { location: { pathname } } = history;
   const isMealsOrDrinks = pathname.includes('/meals/') ? 'meals' : 'drinks';
 
-  const { recipeDetailsRender, setDetailsRender } = useContext(RecipesContext);
-  const [recipeIngredients, setRecipeIngredients] = useState([]);
+  const { recipeDetailsRender, recipeIngredients,
+    setDetailsRender, setRecipeIngredients } = useContext(RecipesContext);
 
   const { strImageSource, strMeal, strDrink, strCategory, strAlcoholic,
     strInstructions, strYoutube, idMeal, idDrink } = recipeDetailsRender;
-  const idItem = idMeal || idDrink;
+  const recipeId = idMeal || idDrink;
   const title = strMeal || strDrink;
 
   const filterIngredients = () => {
@@ -45,16 +45,16 @@ function RecipeDetails({ history, match }) {
     const progressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
     return (
       progressRecipes[isMealsOrDrinks]
-      && progressRecipes[isMealsOrDrinks][idItem]
+      && progressRecipes[isMealsOrDrinks][recipeId]
     );
   };
 
-  const clickStartRecipes = () => {
-    const path = `/${isMealsOrDrinks}/${idItem}/in-progress`;
+  const handleStartOrContinueRecipe = () => {
+    const path = `/${isMealsOrDrinks}/${recipeId}/in-progress`;
     if (isRecipeInProgress()) {
       history.push(path);
     } else {
-      setStartRecipeStorage(isMealsOrDrinks, idItem, recipeIngredients);
+      setStartRecipeStorage(isMealsOrDrinks, recipeId, recipeIngredients);
       history.push(path);
     }
   };
@@ -98,14 +98,14 @@ function RecipeDetails({ history, match }) {
       />
       <Recommendations />
       <FavAndShareButton
-        idItem={ idItem }
+        recipeId={ recipeId }
         type={ isMealsOrDrinks }
       />
       <button
         type="button"
         data-testid="start-recipe-btn"
         className="start-button"
-        onClick={ clickStartRecipes }
+        onClick={ handleStartOrContinueRecipe }
       >
         {isRecipeInProgress() ? 'Continue Recipes' : 'Start Recipes'}
       </button>
