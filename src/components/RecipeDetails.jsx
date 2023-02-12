@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { RecipesContext } from '../contexts/RecipesContext';
 import { setStartRecipeStorage } from '../helpers/SetStorageFunctions';
 import { fetchDetailsDrinks, fetchDetailstMeals } from '../services/ApiRecipeDetails';
+import FavAndShareButton from './FavAndShareButton';
 import Recommendations from './Recommendations';
 
 function RecipeDetails({ history, match }) {
@@ -49,13 +50,13 @@ function RecipeDetails({ history, match }) {
   };
 
   const clickStartRecipes = () => {
-    const inProgress = isRecipeInProgress();
     const path = `/${isMealsOrDrinks}/${idItem}/in-progress`;
-    if (inProgress) {
-      return history.push(path);
+    if (isRecipeInProgress()) {
+      history.push(path);
+    } else {
+      setStartRecipeStorage(isMealsOrDrinks, idItem, recipeIngredients);
+      history.push(path);
     }
-    setStartRecipeStorage(isMealsOrDrinks, idItem, recipeIngredients);
-    return history.push(path);
   };
 
   useEffect(() => {
@@ -96,6 +97,10 @@ function RecipeDetails({ history, match }) {
         title={ title }
       />
       <Recommendations />
+      <FavAndShareButton
+        idItem={ idItem }
+        type={ isMealsOrDrinks }
+      />
       <button
         type="button"
         data-testid="start-recipe-btn"

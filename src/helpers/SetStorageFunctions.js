@@ -19,9 +19,9 @@ export const setFavoriteRecipesStorage = (recipeDetailsRender) => {
   let name;
   let image;
 
-  if (recipeDetailsRender[0].idMeal) {
+  if (recipeDetailsRender.idMeal) {
     const { idMeal, strArea, strCategory,
-      strMeal, strMealThumb, strAlcoholic } = recipeDetailsRender[0];
+      strMeal, strMealThumb, strAlcoholic } = recipeDetailsRender;
     id = idMeal;
     type = 'meal';
     nationality = strArea || '';
@@ -31,9 +31,9 @@ export const setFavoriteRecipesStorage = (recipeDetailsRender) => {
     image = strMealThumb;
   }
 
-  if (recipeDetailsRender[0].idDrink) {
+  if (recipeDetailsRender.idDrink) {
     const { idDrink, strArea, strCategory,
-      strAlcoholic, strDrink, strDrinkThumb } = recipeDetailsRender[0];
+      strAlcoholic, strDrink, strDrinkThumb } = recipeDetailsRender;
 
     id = idDrink;
     type = 'drink';
