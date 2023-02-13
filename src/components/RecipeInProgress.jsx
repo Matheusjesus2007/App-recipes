@@ -2,6 +2,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { RecipesContext } from '../contexts/RecipesContext';
+import { setStartRecipeStorage } from '../helpers/SetStorageFunctions';
 import { fetchDetailsDrinks, fetchDetailstMeals } from '../services/ApiRecipeDetails';
 import FavAndShareButton from './FavAndShareButton';
 
@@ -12,9 +13,9 @@ function RecipeInProgress({ history, match }) {
 
   const { recipeDetailsRender, recipeIngredients,
     setDetailsRender, setRecipeIngredients } = useContext(RecipesContext);
-  const [checkedIngredients, setCheckedIngredients] = useState({});
+  const [clicked, setClicked] = useState(false);
 
-  const { strImageSource, strMeal, strDrink, strCategory, strAlcoholic,
+  const { strImageSource, strMeal, strDrink, strCategory,
     strInstructions, idMeal, idDrink } = recipeDetailsRender;
   const recipeId = idMeal || idDrink;
   const title = strMeal || strDrink;
@@ -28,7 +29,7 @@ function RecipeInProgress({ history, match }) {
     const ingredients = filteredEntries.map(([key, value]) => {
       const numberBase = key.replace(/[^0-9]/g, '');
       const measure = recipeDetailsRender[`strMeasure${numberBase}`];
-      return { [value]: measure };
+      return { [value]: measure, checked: false };
     });
 
     setRecipeIngredients(ingredients);
@@ -41,11 +42,37 @@ function RecipeInProgress({ history, match }) {
     setDetailsRender(recipeDetailsFetch[isMealsOrDrinks][0]);
   };
 
-  const handleCheckboxChange = (index) => {
-    setCheckedIngredients((prevCheckedIngredients) => ({
-      ...prevCheckedIngredients,
-      [index]: !prevCheckedIngredients[index],
-    }));
+  const isChecked = (ingredient) => {
+    const progressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (!progressRecipes) return false;
+    const currentRecipeIngredients = progressRecipes[isMealsOrDrinks][recipeId];
+    const ingredientStatus = currentRecipeIngredients.find((obj) => obj[ingredient]);
+    return ingredientStatus ? ingredientStatus.checked : false;
+  };
+
+  const getInProgressRecipes = () => {
+    let progRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (!progRecipes) {
+      progRecipes = setStartRecipeStorage(isMealsOrDrinks, recipeId, recipeIngredients);
+      progRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    }
+    return progRecipes;
+  };
+
+  const handleCheckboxChange = (ingredient) => {
+    let progressRecipes = getInProgressRecipes();
+    const updatedArray = progressRecipes[isMealsOrDrinks][recipeId].map(
+      (obj) => (obj[ingredient] ? { ...obj, checked: !obj.checked } : obj),
+    );
+    progressRecipes = {
+      ...progressRecipes,
+      [isMealsOrDrinks]: {
+        ...progressRecipes[isMealsOrDrinks],
+        [recipeId]: updatedArray,
+      },
+    };
+    localStorage.setItem('inProgressRecipes', JSON.stringify(progressRecipes));
+    setClicked(!clicked);
   };
 
   useEffect(() => {
@@ -67,36 +94,29 @@ function RecipeInProgress({ history, match }) {
         type={ isMealsOrDrinks }
       />
       <p data-testid="recipe-category">
-        {`${strCategory} - ${strAlcoholic}`}
+        {`${strCategory}`}
       </p>
       <p data-testid="instructions">{strInstructions}</p>
 
-      <ol>
-        {recipeIngredients.map((ingredient, index) => (
-          <div key={ index }>
-            <label
-              htmlFor={ `checkbox-${index}` }
-              data-testid={ `${index}-ingredient-step` }
-            >
-              <li
-                data-testid={ `${index}-ingredient-name-and-measure` }
-                key={ index }
-                className={ checkedIngredients[index] ? 'completed' : '' }
-              >
-                {`${Object.keys(ingredient)} - ${Object.values(ingredient)} `}
-              </li>
+      {recipeIngredients.map((ingredient, index) => (
+        <section key={ index }>
+          <label
+            htmlFor={ `checkbox-${index}` }
+            data-testid={ `${index}-ingredient-step` }
+            className={ isChecked(Object.keys(ingredient)[0]) ? 'completed' : '' }
+          >
+            {`${Object.keys(ingredient)} - ${Object.values(ingredient)} `}
+            <input
+              type="checkbox"
+              id={ `checkbox-${index}` }
+              checked={ isChecked(Object.keys(ingredient)[0]) }
+              onChange={ () => handleCheckboxChange(Object.keys(ingredient)[0]) }
+            />
+          </label>
 
-              <input
-                type="checkbox"
-                id={ `checkbox-${index}` }
-                checked={ !!checkedIngredients[index] }
-                onChange={ () => handleCheckboxChange(index) }
-              />
-            </label>
+        </section>
+      ))}
 
-          </div>
-        ))}
-      </ol>
       <button
         type="button"
         data-testid="finish-recipe-btn"

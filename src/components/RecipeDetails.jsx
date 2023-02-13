@@ -28,7 +28,7 @@ function RecipeDetails({ history, match }) {
     const ingredients = filteredEntries.map(([key, value]) => {
       const numberBase = key.replace(/[^0-9]/g, '');
       const measure = recipeDetailsRender[`strMeasure${numberBase}`];
-      return { [value]: measure };
+      return { [value]: measure, checked: false };
     });
 
     setRecipeIngredients(ingredients);
