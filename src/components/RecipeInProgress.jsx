@@ -2,7 +2,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { RecipesContext } from '../contexts/RecipesContext';
-import { setStartRecipeStorage } from '../helpers/SetStorageFunctions';
+import { setDoneRecipesStorage,
+  setStartRecipeStorage } from '../helpers/SetStorageFunctions';
 import { fetchDetailsDrinks, fetchDetailstMeals } from '../services/ApiRecipeDetails';
 import FavAndShareButton from './FavAndShareButton';
 
@@ -14,6 +15,7 @@ function RecipeInProgress({ history, match }) {
   const { recipeDetailsRender, recipeIngredients,
     setDetailsRender, setRecipeIngredients } = useContext(RecipesContext);
   const [clicked, setClicked] = useState(false);
+  const [finishButtonIsDisabled, setFinishButtonIsDisabled] = useState(true);
 
   const { strImageSource, strMeal, strDrink, strCategory,
     strInstructions, idMeal, idDrink } = recipeDetailsRender;
@@ -75,6 +77,21 @@ function RecipeInProgress({ history, match }) {
     setClicked(!clicked);
   };
 
+  const finishRecipe = () => {
+    setDoneRecipesStorage(recipeDetailsRender);
+    history.push('/done-recipes');
+  };
+
+  useEffect(() => {
+    if (recipeId) {
+      const progressRecipes = getInProgressRecipes();
+      const statusFinishButton = progressRecipes[isMealsOrDrinks][recipeId].some(
+        ({ checked }) => !checked,
+      );
+      setFinishButtonIsDisabled(statusFinishButton);
+    }
+  }, [clicked]);
+
   useEffect(() => {
     fetchDetails();
   }, []);
@@ -120,6 +137,8 @@ function RecipeInProgress({ history, match }) {
       <button
         type="button"
         data-testid="finish-recipe-btn"
+        disabled={ finishButtonIsDisabled }
+        onClick={ finishRecipe }
       >
         Finalizar Receita
       </button>

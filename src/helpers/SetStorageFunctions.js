@@ -13,35 +13,28 @@ export const setStartRecipeStorage = (isMealsOrDrinks, recipeId, recipeIngredien
 export const setFavoriteRecipesStorage = (recipeDetailsRender) => {
   let id;
   let type;
-  let nationality;
-  let category;
-  let alcoholicOrNot;
+  let nationality = '';
+  let category = '';
+  let alcoholicOrNot = '';
   let name;
   let image;
 
   if (recipeDetailsRender.idMeal) {
-    const { idMeal, strArea, strCategory,
-      strMeal, strMealThumb, strAlcoholic } = recipeDetailsRender;
-    id = idMeal;
+    id = recipeDetailsRender.idMeal;
     type = 'meal';
-    nationality = strArea || '';
-    category = strCategory || '';
-    alcoholicOrNot = strAlcoholic || '';
-    name = strMeal;
-    image = strMealThumb;
-  }
-
-  if (recipeDetailsRender.idDrink) {
-    const { idDrink, strArea, strCategory,
-      strAlcoholic, strDrink, strDrinkThumb } = recipeDetailsRender;
-
-    id = idDrink;
+    nationality = recipeDetailsRender.strArea || '';
+    category = recipeDetailsRender.strCategory || '';
+    alcoholicOrNot = recipeDetailsRender.strAlcoholic || '';
+    name = recipeDetailsRender.strMeal;
+    image = recipeDetailsRender.strMealThumb;
+  } else if (recipeDetailsRender.idDrink) {
+    id = recipeDetailsRender.idDrink;
     type = 'drink';
-    nationality = strArea || '';
-    category = strCategory || '';
-    alcoholicOrNot = strAlcoholic || '';
-    name = strDrink;
-    image = strDrinkThumb;
+    nationality = recipeDetailsRender.strArea || '';
+    category = recipeDetailsRender.strCategory || '';
+    alcoholicOrNot = recipeDetailsRender.strAlcoholic || '';
+    name = recipeDetailsRender.strDrink;
+    image = recipeDetailsRender.strDrinkThumb;
   }
 
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
@@ -57,5 +50,56 @@ export const setFavoriteRecipesStorage = (recipeDetailsRender) => {
         image,
       },
     ],
+  ));
+};
+
+export const setDoneRecipesStorage = (recipeDetailsRender) => {
+  console.log(recipeDetailsRender);
+  let id;
+  let type;
+  let nationality = '';
+  let category = '';
+  let alcoholicOrNot = '';
+  let name;
+  let image;
+  let doneDate;
+  let tags;
+
+  if (recipeDetailsRender.idMeal) {
+    id = recipeDetailsRender.idMeal;
+    type = 'meal';
+    nationality = recipeDetailsRender.strArea || '';
+    category = recipeDetailsRender.strCategory || '';
+    alcoholicOrNot = recipeDetailsRender.strAlcoholic || '';
+    name = recipeDetailsRender.strMeal;
+    image = recipeDetailsRender.strMealThumb;
+    doneDate = new Date().toISOString();
+    tags = recipeDetailsRender.strTags ? recipeDetailsRender.strTags.split(',') : [];
+  } else if (recipeDetailsRender.idDrink) {
+    id = recipeDetailsRender.idDrink;
+    type = 'drink';
+    nationality = recipeDetailsRender.strArea || '';
+    category = recipeDetailsRender.strCategory || '';
+    alcoholicOrNot = recipeDetailsRender.strAlcoholic || '';
+    name = recipeDetailsRender.strDrink;
+    image = recipeDetailsRender.strDrinkThumb;
+    doneDate = new Date().toISOString();
+    tags = recipeDetailsRender.strTags ? recipeDetailsRender.strTags.split(',') : [];
+  }
+
+  const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+  localStorage.setItem('doneRecipes', JSON.stringify(
+    [...doneRecipes,
+      {
+        id,
+        type,
+        nationality,
+        category,
+        alcoholicOrNot,
+        name,
+        image,
+        doneDate,
+        tags,
+      }],
   ));
 };
