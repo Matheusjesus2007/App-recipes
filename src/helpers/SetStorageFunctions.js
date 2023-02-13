@@ -11,95 +11,47 @@ export const setStartRecipeStorage = (isMealsOrDrinks, recipeId, recipeIngredien
 };
 
 export const setFavoriteRecipesStorage = (recipeDetailsRender) => {
-  let id;
-  let type;
-  let nationality = '';
-  let category = '';
-  let alcoholicOrNot = '';
-  let name;
-  let image;
-
-  if (recipeDetailsRender.idMeal) {
-    id = recipeDetailsRender.idMeal;
-    type = 'meal';
-    nationality = recipeDetailsRender.strArea || '';
-    category = recipeDetailsRender.strCategory || '';
-    alcoholicOrNot = recipeDetailsRender.strAlcoholic || '';
-    name = recipeDetailsRender.strMeal;
-    image = recipeDetailsRender.strMealThumb;
-  } else if (recipeDetailsRender.idDrink) {
-    id = recipeDetailsRender.idDrink;
-    type = 'drink';
-    nationality = recipeDetailsRender.strArea || '';
-    category = recipeDetailsRender.strCategory || '';
-    alcoholicOrNot = recipeDetailsRender.strAlcoholic || '';
-    name = recipeDetailsRender.strDrink;
-    image = recipeDetailsRender.strDrinkThumb;
-  }
+  const recipeData = {
+    id: recipeDetailsRender.idMeal || recipeDetailsRender.idDrink,
+    type: recipeDetailsRender.idMeal ? 'meal' : 'drink',
+    nationality: recipeDetailsRender.strArea || '',
+    category: recipeDetailsRender.strCategory || '',
+    alcoholicOrNot: recipeDetailsRender.strAlcoholic || '',
+    name: recipeDetailsRender.idMeal
+      ? recipeDetailsRender.strMeal
+      : recipeDetailsRender.strDrink,
+    image: recipeDetailsRender.idMeal
+      ? recipeDetailsRender.strMealThumb
+      : recipeDetailsRender.strDrinkThumb,
+  };
 
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
   localStorage.setItem('favoriteRecipes', JSON.stringify(
-    [...favoriteRecipes,
-      {
-        id,
-        type,
-        nationality,
-        category,
-        alcoholicOrNot,
-        name,
-        image,
-      },
-    ],
+    [...favoriteRecipes, recipeData],
   ));
 };
 
 export const setDoneRecipesStorage = (recipeDetailsRender) => {
-  console.log(recipeDetailsRender);
-  let id;
-  let type;
-  let nationality = '';
-  let category = '';
-  let alcoholicOrNot = '';
-  let name;
-  let image;
-  let doneDate;
-  let tags;
-
-  if (recipeDetailsRender.idMeal) {
-    id = recipeDetailsRender.idMeal;
-    type = 'meal';
-    nationality = recipeDetailsRender.strArea || '';
-    category = recipeDetailsRender.strCategory || '';
-    alcoholicOrNot = recipeDetailsRender.strAlcoholic || '';
-    name = recipeDetailsRender.strMeal;
-    image = recipeDetailsRender.strMealThumb;
-    doneDate = new Date().toISOString();
-    tags = recipeDetailsRender.strTags ? recipeDetailsRender.strTags.split(',') : [];
-  } else if (recipeDetailsRender.idDrink) {
-    id = recipeDetailsRender.idDrink;
-    type = 'drink';
-    nationality = recipeDetailsRender.strArea || '';
-    category = recipeDetailsRender.strCategory || '';
-    alcoholicOrNot = recipeDetailsRender.strAlcoholic || '';
-    name = recipeDetailsRender.strDrink;
-    image = recipeDetailsRender.strDrinkThumb;
-    doneDate = new Date().toISOString();
-    tags = recipeDetailsRender.strTags ? recipeDetailsRender.strTags.split(',') : [];
-  }
+  const recipeData = {
+    id: recipeDetailsRender.idMeal || recipeDetailsRender.idDrink,
+    type: recipeDetailsRender.idMeal ? 'meal' : 'drink',
+    nationality: recipeDetailsRender.strArea || '',
+    category: recipeDetailsRender.strCategory || '',
+    alcoholicOrNot: recipeDetailsRender.strAlcoholic || '',
+    name: recipeDetailsRender.idMeal
+      ? recipeDetailsRender.strMeal
+      : recipeDetailsRender.strDrink,
+    image: recipeDetailsRender.idMeal
+      ? recipeDetailsRender.strMealThumb
+      : recipeDetailsRender.strDrinkThumb,
+    doneDate: new Date().toISOString(),
+    tags: recipeDetailsRender.strTags
+      ? recipeDetailsRender.strTags.split(',')
+      : [],
+  };
 
   const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
   localStorage.setItem('doneRecipes', JSON.stringify(
-    [...doneRecipes,
-      {
-        id,
-        type,
-        nationality,
-        category,
-        alcoholicOrNot,
-        name,
-        image,
-        doneDate,
-        tags,
-      }],
+    [...doneRecipes, recipeData],
   ));
 };
