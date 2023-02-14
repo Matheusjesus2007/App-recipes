@@ -25,7 +25,6 @@ function DoneRecipes() {
                 src={ image }
                 alt=""
                 data-testid={ `${index}-horizontal-image` }
-                style={ { width: '200px' } }
               />
               <p data-testid={ `${index}-horizontal-name` }>{ name }</p>
             </Link>

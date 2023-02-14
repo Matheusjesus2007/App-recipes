@@ -22,7 +22,6 @@ function FavoriteRecipes() {
               src={ recipe.image }
               alt={ recipe.name }
               data-testid={ `${index}-horizontal-image` }
-              style={ { width: '200px' } }
             />
             <p
               name="HorizontalName"
