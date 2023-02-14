@@ -5,7 +5,7 @@ import { RecipesContext } from '../contexts/RecipesContext';
 import { setDoneRecipesStorage,
   setStartRecipeStorage } from '../helpers/SetStorageFunctions';
 import { fetchDetailsDrinks, fetchDetailstMeals } from '../services/ApiRecipeDetails';
-import FavAndShareButton from './FavAndShareButton';
+import FavAndShareButton from '../components/FavAndShareButton';
 
 function RecipeInProgress({ history, match }) {
   const { params: { id } } = match;

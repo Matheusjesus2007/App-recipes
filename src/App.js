@@ -8,7 +8,7 @@ import Login from './pages/Login';
 import Meals from './pages/Meals';
 import Profile from './pages/Profile';
 import RecipeDetails from './components/RecipeDetails';
-import RecipeInProgress from './components/RecipeInProgress';
+import RecipeInProgress from './pages/RecipeInProgress';
 
 function App() {
   return (

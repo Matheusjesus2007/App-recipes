@@ -64,7 +64,7 @@ function FavAndShareButton({ index, recipeId, type, history }) {
       </button>
       <button onClick={ handleClickButtonShare }>
         <img
-          data-testid={ pathname.includes('favorite')
+          data-testid={ pathname.includes('favorite') || pathname.includes('done')
             ? `${index}-horizontal-share-btn`
             : 'share-btn' }
           src={ shareIcon }
