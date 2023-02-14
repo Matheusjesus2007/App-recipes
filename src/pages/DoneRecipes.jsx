@@ -1,49 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import FavAndShareButton from '../components/FavAndShareButton';
+import FilterMealOrDrink from '../components/FilterMealOrDrink';
 import Header from '../components/Header';
+import { ButtonsCaterogiriesContext } from '../contexts/ButtonsCategoriesContext';
 
-function DoneRecipes({ history }) {
-  const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
-  const [renderDoneRecipes, setRenderDoneRecipes] = useState(doneRecipes);
-
-  const handleFilter = ({ target: { value } }) => {
-    const filteredRecipes = value === 'all'
-      ? doneRecipes
-      : doneRecipes.filter((recipe) => recipe.type === value);
-
-    setRenderDoneRecipes(filteredRecipes);
-  };
+function DoneRecipes() {
+  const { renderDoneRecipes } = useContext(ButtonsCaterogiriesContext);
 
   return (
     <>
       <Header title="Done Recipes" />
-      <button
-        type="button"
-        data-testid="filter-by-all-btn"
-        value="all"
-        onClick={ handleFilter }
-      >
-        All
-      </button>
-
-      <button
-        type="button"
-        data-testid="filter-by-meal-btn"
-        value="meal"
-        onClick={ handleFilter }
-      >
-        Meals
-      </button>
-
-      <button
-        type="button"
-        data-testid="filter-by-drink-btn"
-        value="drink"
-        onClick={ handleFilter }
-      >
-        Drinks
-      </button>
+      <FilterMealOrDrink />
       {renderDoneRecipes.map((recipe, index) => {
         const { image, nationality, category, id,
           type, name, doneDate, tags, alcoholicOrNot } = recipe;

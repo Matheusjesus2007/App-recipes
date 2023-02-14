@@ -6,6 +6,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import HeaderProvider from './contexts/HeaderContext';
 import RecipesProvider from './contexts/RecipesContext';
+import ButtonsCaterogiriesProvider from './contexts/ButtonsCategoriesContext';
 
 ReactDOM
   .createRoot(document.getElementById('root'))
@@ -13,7 +14,9 @@ ReactDOM
     <BrowserRouter>
       <HeaderProvider>
         <RecipesProvider>
-          <App />
+          <ButtonsCaterogiriesProvider>
+            <App />
+          </ButtonsCaterogiriesProvider>
         </RecipesProvider>
       </HeaderProvider>
     </BrowserRouter>,

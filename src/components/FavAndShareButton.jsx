@@ -7,6 +7,7 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import { setFavoriteRecipesStorage } from '../helpers/SetStorageFunctions';
 import { RecipesContext } from '../contexts/RecipesContext';
+import { ButtonsCaterogiriesContext } from '../contexts/ButtonsCategoriesContext';
 
 function FavAndShareButton({ index, recipeId, type, history }) {
   const duration = 500;
@@ -16,6 +17,7 @@ function FavAndShareButton({ index, recipeId, type, history }) {
   const { recipeDetailsRender } = useContext(RecipesContext);
   const [isCopied, setIsCopied] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+  const { setRenderFavoriteRecipes } = useContext(ButtonsCaterogiriesContext);
 
   const linkCopied = () => {
     setIsCopied(true);
@@ -30,6 +32,7 @@ function FavAndShareButton({ index, recipeId, type, history }) {
   const removeFavoriteRecipe = () => {
     const newFavoriteRecipes = favoriteRecipes.filter((recipe) => recipe.id !== recipeId);
     localStorage.setItem('favoriteRecipes', JSON.stringify(newFavoriteRecipes));
+    setRenderFavoriteRecipes(newFavoriteRecipes);
   };
 
   const addFavoriteRecipe = () => {
@@ -48,7 +51,7 @@ function FavAndShareButton({ index, recipeId, type, history }) {
   useEffect(() => {
     const isRecipeInFavorites = favoriteRecipes.some((recipe) => recipe.id === recipeId);
     return setIsFavorite(isRecipeInFavorites);
-  }, [recipeDetailsRender]);
+  });
 
   return (
     <div>
@@ -58,6 +61,7 @@ function FavAndShareButton({ index, recipeId, type, history }) {
           data-testid={ pathname.includes('favorite')
             ? `${index}-horizontal-favorite-btn`
             : 'favorite-btn' }
+          type="imge'svg+xml'"
           src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
           alt={ isFavorite ? 'BlackHeart Icon' : 'WhiteHeart Icon' }
         />
