@@ -8,24 +8,26 @@ function FilterMealOrDrink({ history: { location: { pathname } } }) {
   const { setRenderFavoriteRecipes,
     setRenderDoneRecipes } = useContext(ButtonsCaterogiriesContext);
 
+  const isDonePage = pathname.includes('done');
+  const setRenderRecipes = isDonePage ? setRenderDoneRecipes : setRenderFavoriteRecipes;
+  const recipes = isDonePage ? doneRecipes : favoriteRecipes;
+
   const handleFilter = ({ target: { value } }) => {
-    const isDonePage = pathname.includes('done');
-    const recipes = isDonePage ? doneRecipes : favoriteRecipes;
-    const setRenderRecipes = isDonePage ? setRenderDoneRecipes : setRenderFavoriteRecipes;
-
-    const filteredRecipes = value === 'all'
-      ? recipes
-      : recipes.filter((recipe) => recipe.type === value);
-
+    const filteredRecipes = recipes.filter((recipe) => recipe.type === value);
     setRenderRecipes(filteredRecipes);
   };
+
+  const showAllSavedRecipes = () => {
+    setRenderRecipes(recipes);
+  };
+
   return (
     <>
       <button
         type="button"
         data-testid="filter-by-all-btn"
         value="all"
-        onClick={ handleFilter }
+        onClick={ showAllSavedRecipes }
       >
         All
       </button>

@@ -9,10 +9,10 @@ import RecipeCard from './RecipeCard';
 
 function Recipes({ history: { location: { pathname } } }) {
   const isMealsOrDrinks = pathname.slice(1);
-  const { allRecipes, setRenderRecipes,
-    setAllRecipes } = useContext(RecipesContext);
-  const [categories, setCategories] = useState([]);
-  const [existFilter, setExisfilter] = useState('');
+  const { allRecipes, renderRecipes,
+    setRenderRecipes, setAllRecipes } = useContext(RecipesContext);
+  const [initialCategories, setInitialCategories] = useState([]);
+  const [categoryInUse, setCategoryInUse] = useState('');
 
   const maxNumberOfRecipes = 12;
   const maxNumberOfCategories = 5;
@@ -23,30 +23,47 @@ function Recipes({ history: { location: { pathname } } }) {
   };
 
   const setDefaultFood = async () => {
-    const recipesDefault = isMealsOrDrinks === 'meals'
-      ? await fetchDefaultMeals()
-      : await fetchDefaultDrinks();
-    setAllRecipes(recipesDefault[isMealsOrDrinks]);
+    let defaultFood = JSON.parse(localStorage.getItem('defaultFood'));
+
+    if (!defaultFood || !defaultFood[isMealsOrDrinks]) {
+      const defaultMeals = await fetchDefaultMeals();
+      const defaultDrinks = await fetchDefaultDrinks();
+      localStorage.setItem('defaultFood', JSON.stringify({
+        meals: defaultMeals.meals,
+        drinks: defaultDrinks.drinks }));
+    }
+    defaultFood = JSON.parse(localStorage.getItem('defaultFood'));
+    setAllRecipes(defaultFood[isMealsOrDrinks] || []);
   };
 
-  const setDefaulCategories = async () => {
-    const defaultCategories = isMealsOrDrinks === 'meals'
-      ? await fetchCategoriesMeals()
-      : await fetchCategoriesDrinks();
-    setCategories(defaultCategories[isMealsOrDrinks].slice(0, maxNumberOfCategories));
+  const setDefaultCategories = async () => {
+    let defaultCategories = JSON.parse(localStorage.getItem('defaultCategories'));
+
+    if (!defaultCategories || !defaultCategories[isMealsOrDrinks]) {
+      const defaultCategoriesMeals = await fetchCategoriesMeals();
+      const defaultCategoriesDrinks = await fetchCategoriesDrinks();
+
+      localStorage.setItem('defaultCategories', JSON.stringify({
+        meals: defaultCategoriesMeals.meals,
+        drinks: defaultCategoriesDrinks.drinks,
+      }));
+    }
+    defaultCategories = JSON.parse(localStorage.getItem('defaultCategories'));
+    setInitialCategories(defaultCategories[isMealsOrDrinks]
+      .slice(0, maxNumberOfCategories));
   };
 
   const fetchFoodByCategory = async (category) => {
-    const categoryFood = isMealsOrDrinks === 'meals'
+    const recipesByCategory = isMealsOrDrinks === 'meals'
       ? await fetchByCategoryMeals(category)
       : await fetchByCategoryDrinks(category);
-    setAllRecipes(categoryFood[isMealsOrDrinks]);
-    setExisfilter(category);
+    setAllRecipes(recipesByCategory[isMealsOrDrinks]);
+    setCategoryInUse(category);
   };
 
-  const handleFoodCategoryFilter = async ({ target: { value } }) => {
-    if (existFilter === value) {
-      setExisfilter('');
+  const handleCategoryFilterChange = async ({ target: { value } }) => {
+    if (categoryInUse === value) {
+      setCategoryInUse('');
       return setDefaultFood();
     }
     fetchFoodByCategory(value);
@@ -54,7 +71,7 @@ function Recipes({ history: { location: { pathname } } }) {
 
   useEffect(() => {
     setDefaultFood();
-    setDefaulCategories();
+    setDefaultCategories();
   }, []);
 
   useEffect(() => {
@@ -62,29 +79,26 @@ function Recipes({ history: { location: { pathname } } }) {
   }, [allRecipes]);
 
   return (
-    <>
-      <nav>
-        {categories.map((category, index) => (
-          <button
-            key={ index }
-            data-testid={ `${category.strCategory}-category-filter` }
-            value={ category.strCategory }
-            onClick={ handleFoodCategoryFilter }
-          >
-            {category.strCategory}
-          </button>
-        ))}
-      </nav>
+    <section>
+      {initialCategories.map(({ strCategory }) => (
+        <button
+          key={ strCategory }
+          data-testid={ `${strCategory}-category-filter` }
+          value={ strCategory }
+          onClick={ handleCategoryFilterChange }
+        >
+          {strCategory}
+        </button>
+      ))}
       <button
         type="button"
         data-testid="All-category-filter"
         onClick={ setDefaultFood }
       >
         ALL
-
       </button>
-      <RecipeCard />
-    </>
+      {renderRecipes && <RecipeCard recipes={ renderRecipes } />}
+    </section>
   );
 }
 

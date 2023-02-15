@@ -2,14 +2,15 @@ import { useContext, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { HeaderContext } from '../contexts/HeaderContext';
 import { RecipesContext } from '../contexts/RecipesContext';
-import { searchFetchDrinks, searchFetchMeals } from '../helpers/SearchFetchSwitch';
+import { searchFetchDrinks, searchFetchMeals } from '../services/ApiSearchBarSwitch';
 
 function SearchBar({ history }) {
+  const { location: { pathname } } = history;
   const [selectedRadioButton, setSelectedRadioButton] = useState('');
-  const { valueInputSearch } = useContext(HeaderContext);
+  const { inputSearchValue } = useContext(HeaderContext);
   const { setAllRecipes } = useContext(RecipesContext);
 
-  const validateRoute = (data, pathname) => {
+  const handleValidatedData = (data) => {
     if (!data.meals && !data.drinks) {
       return global.alert('Sorry, we haven\'t found any recipes for these filters.');
     }
@@ -24,60 +25,55 @@ function SearchBar({ history }) {
   };
 
   const handleSearch = async () => {
-    const { location: { pathname } } = history;
-    if (selectedRadioButton === 'firstLetter' && valueInputSearch.length > 1) {
+    if (selectedRadioButton === 'firstLetter' && inputSearchValue.length > 1) {
       return global.alert('Your search must have only 1 (one) character');
     }
-    const data = pathname === '/meals'
-      ? await searchFetchMeals(selectedRadioButton, valueInputSearch)
-      : await searchFetchDrinks(selectedRadioButton, valueInputSearch);
+    const searchFn = pathname === '/meals' ? searchFetchMeals : searchFetchDrinks;
+    const data = await searchFn(selectedRadioButton, inputSearchValue);
 
-    return validateRoute(data, pathname);
+    return handleValidatedData(data);
   };
 
   return (
-    <>
-      <label htmlFor="ingredient">
-        Ingredient:
+    <section>
+      <label htmlFor="searchBy">
+        <span>Ingredient</span>
         <input
-          name="search"
-          id="ingredient"
+          name="searchBy"
+          value="ingredient"
           data-testid="ingredient-search-radio"
           type="radio"
-          onChange={ ({ target }) => setSelectedRadioButton(target.id) }
+          onChange={ ({ target }) => setSelectedRadioButton(target.value) }
         />
-      </label>
 
-      <label htmlFor="name">
-        Name:
+        <span>Name</span>
         <input
-          name="search"
-          id="name"
+          name="searchBy"
+          value="name"
           data-testid="name-search-radio"
           type="radio"
-          onChange={ ({ target }) => setSelectedRadioButton(target.id) }
+          onChange={ ({ target }) => setSelectedRadioButton(target.value) }
         />
-      </label>
 
-      <label htmlFor="firstLetter">
-        First letter:
+        <span>First letter</span>
         <input
-          name="search"
-          id="firstLetter"
+          name="searchBy"
+          value="firstLetter"
           data-testid="first-letter-search-radio"
           type="radio"
-          onChange={ ({ target }) => setSelectedRadioButton(target.id) }
+          onChange={ ({ target }) => setSelectedRadioButton(target.value) }
         />
+
       </label>
+
       <button
         data-testid="exec-search-btn"
         type="button"
         onClick={ handleSearch }
       >
         Search
-
       </button>
-    </>
+    </section>
   );
 }
 

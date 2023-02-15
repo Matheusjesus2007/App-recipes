@@ -1,11 +1,11 @@
 import { fetchIngredientsMeals,
   fetchNameMeals,
-  fetchFirstLetterMeals } from '../services/ApiMeals';
+  fetchFirstLetterMeals } from './ApiMeals';
 
 import {
   fetchIngredientsDrinks,
   fetchNameDrinks,
-  fetchFirstLetterDrinks } from '../services/ApiDrinks';
+  fetchFirstLetterDrinks } from './ApiDrinks';
 
 export const searchFetchMeals = (searchRadioButton, valueInputSearch) => {
   switch (searchRadioButton) {

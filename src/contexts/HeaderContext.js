@@ -3,14 +3,14 @@ import { createContext, useMemo, useState } from 'react';
 export const HeaderContext = createContext('');
 
 function HeaderProvider({ children }) {
-  const [valueInputSearch, setValueInputSearch] = useState('');
+  const [inputSearchValue, setInputSearchValue] = useState('');
 
-  const values = useMemo(() => ({
-    valueInputSearch, setValueInputSearch,
-  }), [valueInputSearch, setValueInputSearch]);
+  const contextValues = useMemo(() => ({
+    inputSearchValue, setInputSearchValue,
+  }), [inputSearchValue, setInputSearchValue]);
 
   return (
-    <HeaderContext.Provider value={ values }>
+    <HeaderContext.Provider value={ contextValues }>
       { children }
     </HeaderContext.Provider>
   );

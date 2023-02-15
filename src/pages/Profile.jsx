@@ -6,13 +6,13 @@ import Footer from '../components/Footer';
 function Profile({ history }) {
   const user = JSON.parse(localStorage.getItem('user'));
 
-  const clearLocalStorage = () => {
+  const logoutUserAndClearLocalStorage = () => {
     localStorage.clear();
     history.push('/');
   };
 
   return (
-    <>
+    <section>
       <Header title="Profile" />
       <p
         htmlFor="input-email"
@@ -45,13 +45,13 @@ function Profile({ history }) {
           type="button"
           name="btn-logout"
           data-testid="profile-logout-btn"
-          onClick={ clearLocalStorage }
+          onClick={ logoutUserAndClearLocalStorage }
         >
           Logout
         </button>
       </Link>
       <Footer />
-    </>
+    </section>
   );
 }
 

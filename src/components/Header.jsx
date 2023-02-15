@@ -2,49 +2,46 @@ import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
-import searchIcon from '../images/searchIcon.svg';
 import { HeaderContext } from '../contexts/HeaderContext';
+import searchIcon from '../images/searchIcon.svg';
 
 function Header({ title }) {
-  const [isInputDisabled, setIsInputDisabled] = useState(true);
-  const { valueInputSearch, setValueInputSearch } = useContext(HeaderContext);
+  const [isInputSearchEnabled, setInputSearchEnabled] = useState(false);
+  const { inputSearchValue, setInputSearchValue } = useContext(HeaderContext);
 
-  const activeSearchIcon = ['Meals', 'Drinks'];
-
-  const toggleInputSearch = () => {
-    setIsInputDisabled(!isInputDisabled);
-  };
+  const isSearchableTitle = ['Meals', 'Drinks'].includes(title);
 
   return (
-    <>
-      <h1 data-testid="page-title">{ title }</h1>
+    <header>
+      <h1 data-testid="page-title">{title}</h1>
+
       <Link to="/profile">
-        <img
-          data-testid="profile-top-btn"
-          src={ profileIcon }
-          alt="profileIcon"
-        />
+        <img data-testid="profile-top-btn" src={ profileIcon } alt="Profile Icon" />
       </Link>
 
-      { activeSearchIcon.includes(title) && (
+      { isSearchableTitle && (
         <button
           type="button"
-          onClick={ toggleInputSearch }
+          onClick={ () => setInputSearchEnabled(!isInputSearchEnabled) }
         >
           <img
             data-testid="search-top-btn"
             src={ searchIcon }
-            alt="searchIcon"
+            alt="Ícone de busca"
           />
-        </button>)}
+        </button>
+      )}
 
-      {!isInputDisabled && <input
-        data-testid="search-input"
-        type="text"
-        value={ valueInputSearch }
-        onChange={ ({ target }) => setValueInputSearch(target.value) }
-      />}
-    </>
+      {isInputSearchEnabled && (
+        <input
+          data-testid="search-input"
+          type="text"
+          value={ inputSearchValue }
+          onChange={ ({ target }) => setInputSearchValue(target.value) }
+        />
+      )}
+
+    </header>
   );
 }
 
