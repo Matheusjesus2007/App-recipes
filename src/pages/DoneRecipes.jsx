@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import FavAndShareButton from '../components/FavAndShareButton';
 import FilterMealOrDrink from '../components/FilterMealOrDrink';
@@ -6,7 +6,13 @@ import Header from '../components/Header';
 import { ButtonsCaterogiriesContext } from '../contexts/ButtonsCategoriesContext';
 
 function DoneRecipes() {
-  const { renderDoneRecipes } = useContext(ButtonsCaterogiriesContext);
+  const { renderDoneRecipes,
+    setRenderDoneRecipes } = useContext(ButtonsCaterogiriesContext);
+
+  useEffect(() => {
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    setRenderDoneRecipes(doneRecipes);
+  }, []);
 
   return (
     <>
@@ -17,7 +23,7 @@ function DoneRecipes() {
           type, name, doneDate, tags, alcoholicOrNot } = recipe;
 
         return (
-          <div key={ index }>
+          <section key={ index }>
             <Link
               to={ `${type}s/${id}` }
             >
@@ -36,11 +42,12 @@ function DoneRecipes() {
             <p data-testid={ `${index}-${tags[1]}-horizontal-tag` }>{tags[1]}</p>
 
             <FavAndShareButton
+              curRecipe={ recipe }
               recipeId={ id }
               type={ `${type}s` }
               index={ index }
             />
-          </div>
+          </section>
         );
       })}
     </>

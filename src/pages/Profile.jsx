@@ -14,6 +14,7 @@ function Profile({ history }) {
   return (
     <section>
       <Header title="Profile" />
+
       <p
         htmlFor="input-email"
         type="email"
@@ -22,6 +23,7 @@ function Profile({ history }) {
       >
         { user ? user.email : '' }
       </p>
+
       <Link to="/done-recipes">
         <button
           type="button"
@@ -31,6 +33,7 @@ function Profile({ history }) {
           Done Recipes
         </button>
       </Link>
+
       <Link to="/favorite-recipes">
         <button
           type="button"
@@ -40,6 +43,7 @@ function Profile({ history }) {
           Favorite Recipes
         </button>
       </Link>
+
       <Link to="/">
         <button
           type="button"
@@ -50,6 +54,7 @@ function Profile({ history }) {
           Logout
         </button>
       </Link>
+
       <Footer />
     </section>
   );

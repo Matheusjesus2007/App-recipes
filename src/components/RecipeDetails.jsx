@@ -9,6 +9,7 @@ import Recommendations from './Recommendations';
 function RecipeDetails({ history, match }) {
   const { params: { id } } = match;
   const { location: { pathname } } = history;
+
   const isMealsOrDrinks = pathname.includes('/meals/') ? 'meals' : 'drinks';
 
   const { recipeDetailsRender, recipeIngredients,
@@ -27,7 +28,7 @@ function RecipeDetails({ history, match }) {
 
     const ingredients = filteredEntries.map(([key, value]) => {
       const numberBase = key.replace(/[^0-9]/g, '');
-      const measure = recipeDetailsRender[`strMeasure${numberBase}`];
+      const measure = recipeDetailsRender[`strMeasure${numberBase}`] || 'To Taste';
       return { [value]: measure, checked: false };
     });
 
@@ -83,8 +84,8 @@ function RecipeDetails({ history, match }) {
             data-testid={ `${index}-ingredient-name-and-measure` }
             key={ index }
           >
-            {`${Object.keys(ingredient)} - ${Object.values(ingredient)} `}
-
+            {`${Object.keys(ingredient)[0]} 
+            - ${Object.values(ingredient)[0]} `}
           </li>
         ))}
       </ol>

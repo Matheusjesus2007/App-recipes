@@ -30,7 +30,7 @@ function RecipeInProgress({ history, match }) {
 
     const ingredients = filteredEntries.map(([key, value]) => {
       const numberBase = key.replace(/[^0-9]/g, '');
-      const measure = recipeDetailsRender[`strMeasure${numberBase}`];
+      const measure = recipeDetailsRender[`strMeasure${numberBase}`] || 'To Taste';
       return { [value]: measure, checked: false };
     });
 
@@ -122,7 +122,9 @@ function RecipeInProgress({ history, match }) {
             data-testid={ `${index}-ingredient-step` }
             className={ isChecked(Object.keys(ingredient)[0]) ? 'completed' : '' }
           >
-            {`${Object.keys(ingredient)} - ${Object.values(ingredient)} `}
+            {`${Object.keys(ingredient)[0]} 
+            - ${Object.values(ingredient)[0] || 'To Taste'} `}
+
             <input
               type="checkbox"
               id={ `checkbox-${index}` }

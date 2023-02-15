@@ -11,6 +11,7 @@ import { ButtonsCaterogiriesContext } from '../contexts/ButtonsCategoriesContext
 
 function FavAndShareButton({ index, recipeId, type, history }) {
   const duration = 500;
+  const defaultFood = JSON.parse(localStorage.getItem('defaultFood'));
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
 
   const { location: { pathname } } = history;
@@ -36,6 +37,11 @@ function FavAndShareButton({ index, recipeId, type, history }) {
   };
 
   const addFavoriteRecipe = () => {
+    const idItem = type === 'meals' ? 'idMeal' : 'idDrink';
+    if (recipeDetailsRender.length === 0) {
+      const defaultFoodAux = defaultFood[type].find((food) => food[idItem] === recipeId);
+      return setFavoriteRecipesStorage(defaultFoodAux);
+    }
     setFavoriteRecipesStorage(recipeDetailsRender);
   };
 

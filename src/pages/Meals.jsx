@@ -6,12 +6,12 @@ import SearchBar from '../components/SearchBar';
 
 function Meals() {
   return (
-    <>
+    <nav>
       <Header title="Meals" />
       <SearchBar />
       <Recipes />
       <Footer />
-    </>
+    </nav>
   );
 }
 

@@ -3,10 +3,8 @@ import { createContext, useMemo, useState } from 'react';
 export const ButtonsCaterogiriesContext = createContext('');
 
 function ButtonsCategories({ children }) {
-  const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
-  const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-  const [renderDoneRecipes, setRenderDoneRecipes] = useState(doneRecipes);
-  const [renderFavoriteRecipes, setRenderFavoriteRecipes] = useState(favoriteRecipes);
+  const [renderDoneRecipes, setRenderDoneRecipes] = useState([]);
+  const [renderFavoriteRecipes, setRenderFavoriteRecipes] = useState([]);
 
   const values = useMemo(() => ({
     renderDoneRecipes,
