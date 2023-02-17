@@ -36,12 +36,13 @@ function ProgressIngredients({ location, recipeId, updateFinishButtonStatus }) {
       },
     };
     localStorage.setItem('inProgressRecipes', JSON.stringify(progressRecipes));
-    updateFinishButtonStatus(ingredient);
+    updateFinishButtonStatus();
   };
   useEffect(() => {
     if (recipeDetailsRender) {
       filterIngredients();
     }
+    updateFinishButtonStatus();
   }, [recipeDetailsRender]);
 
   return (

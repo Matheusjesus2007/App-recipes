@@ -44,7 +44,11 @@ function RecipeInProgress({ history, match }) {
   };
 
   const finishRecipe = () => {
-    setDoneRecipesStorage(recipeDetailsRender);
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    const isDone = doneRecipes.some((recipe) => recipe.id === id);
+    if (!isDone) {
+      setDoneRecipesStorage(recipeDetailsRender);
+    }
     history.push('/done-recipes');
   };
 
