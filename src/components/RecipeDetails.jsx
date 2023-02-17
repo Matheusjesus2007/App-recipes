@@ -1,58 +1,44 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { RecipesContext } from '../contexts/RecipesContext';
 import { setStartRecipeStorage } from '../helpers/SetStorageFunctions';
-import { fetchDetailsDrinks, fetchDetailstMeals } from '../services/ApiRecipeDetails';
+import { fetchRecipeDetailsAux,
+  filterIngredientsAux } from '../helpers/fetchDetailsAndFilter';
 import FavAndShareButton from './FavAndShareButton';
 import Recommendations from './Recommendations';
 
 function RecipeDetails({ history, match }) {
   const { params: { id } } = match;
   const { location: { pathname } } = history;
+  const maxNumberOfRecommendation = 6;
 
+  const progressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
   const isMealsOrDrinks = pathname.includes('/meals/') ? 'meals' : 'drinks';
+  const typeRecommendation = pathname.includes('/meals/') ? 'drinks' : 'meals';
 
   const { recipeDetailsRender, recipeIngredients,
-    setDetailsRender, setRecipeIngredients } = useContext(RecipesContext);
+    setRecipeDetailsRender, setRecipeIngredients } = useContext(RecipesContext);
+  const [recipesRecommendation, setRecipesRecommendation] = useState([]);
+  const [buttonContinueRecipe, setButtonContinueRecipe] = useState(false);
 
   const { strImageSource, strMeal, strDrink, strCategory, strAlcoholic,
     strInstructions, strYoutube, idMeal, idDrink } = recipeDetailsRender;
   const recipeId = idMeal || idDrink;
   const title = strMeal || strDrink;
 
+  const fetchRecipeDetails = async (newRecipeId, recipeType) => {
+    const recipeDetailsFetch = await fetchRecipeDetailsAux(newRecipeId, recipeType);
+    setRecipeDetailsRender(recipeDetailsFetch);
+  };
+
   const filterIngredients = () => {
-    const ingredientEntries = Object.entries(recipeDetailsRender);
-
-    const filteredEntries = ingredientEntries
-      .filter(([key, value]) => key.includes('Ingredient') && value);
-
-    const ingredients = filteredEntries.map(([key, value]) => {
-      const numberBase = key.replace(/[^0-9]/g, '');
-      const measure = recipeDetailsRender[`strMeasure${numberBase}`] || 'To Taste';
-      return { [value]: measure, checked: false };
-    });
-
+    const ingredients = filterIngredientsAux(recipeDetailsRender);
     setRecipeIngredients(ingredients);
-  };
-
-  const fetchDetails = async () => {
-    const recipeDetailsFetch = isMealsOrDrinks === 'meals'
-      ? await fetchDetailstMeals(id)
-      : await fetchDetailsDrinks(id);
-    setDetailsRender(recipeDetailsFetch[isMealsOrDrinks][0]);
-  };
-
-  const isRecipeInProgress = () => {
-    const progressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
-    return (
-      progressRecipes[isMealsOrDrinks]
-      && progressRecipes[isMealsOrDrinks][recipeId]
-    );
   };
 
   const handleStartOrContinueRecipe = () => {
     const path = `/${isMealsOrDrinks}/${recipeId}/in-progress`;
-    if (isRecipeInProgress()) {
+    if (buttonContinueRecipe) {
       history.push(path);
     } else {
       setStartRecipeStorage(isMealsOrDrinks, recipeId, recipeIngredients);
@@ -60,19 +46,29 @@ function RecipeDetails({ history, match }) {
     }
   };
 
+  const setRecomendations = async () => {
+    const defaultFood = JSON.parse(localStorage.getItem('defaultFood'));
+    setRecipesRecommendation(defaultFood[typeRecommendation]
+      .slice(0, maxNumberOfRecommendation));
+  };
+
   useEffect(() => {
-    fetchDetails();
+    fetchRecipeDetails(id, isMealsOrDrinks);
   }, []);
 
   useEffect(() => {
+    setRecomendations();
     if (recipeDetailsRender) {
       filterIngredients();
+      setButtonContinueRecipe(
+        progressRecipes[isMealsOrDrinks]
+        && progressRecipes[isMealsOrDrinks][recipeId],
+      );
     }
   }, [recipeDetailsRender]);
 
   return (
-
-    <div>
+    <section>
       <img src={ strImageSource } alt="" data-testid="recipe-photo" />
       <h1 data-testid="recipe-title">{title}</h1>
       <p data-testid="recipe-category">
@@ -90,14 +86,18 @@ function RecipeDetails({ history, match }) {
         ))}
       </ol>
       <p data-testid="instructions">{strInstructions}</p>
-      <iframe
+      {isMealsOrDrinks === 'meals' && <iframe
         src={ strYoutube }
         data-testid="video"
         width="480"
         height="350"
         title={ title }
+      />}
+
+      <Recommendations
+        fetchRecipeDetails={ fetchRecipeDetails }
+        recipesRecommendation={ recipesRecommendation }
       />
-      <Recommendations />
       <FavAndShareButton
         recipeId={ recipeId }
         type={ isMealsOrDrinks }
@@ -108,10 +108,9 @@ function RecipeDetails({ history, match }) {
         className="start-button"
         onClick={ handleStartOrContinueRecipe }
       >
-        {isRecipeInProgress() ? 'Continue Recipes' : 'Start Recipes'}
+        {buttonContinueRecipe ? 'Continue Recipes' : 'Start Recipes'}
       </button>
-    </div>
-
+    </section>
   );
 }
 

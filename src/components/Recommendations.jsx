@@ -1,52 +1,36 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { fetchDefaultDrinks, fetchDefaultMeals } from '../services/ApiDefaultSearchFood';
 
-function Recommendations({ history: { location: { pathname } } }) {
-  const [recipesRecommendation, setRecipesRecommendation] = useState([]);
-
+function Recommendations({ fetchRecipeDetails, recipesRecommendation, location }) {
+  const { pathname } = location;
   const typeRecommendation = pathname.includes('/meals/') ? 'drinks' : 'meals';
-  const maxNumberOfRecommendation = 6;
-
-  const setRecomendations = async () => {
-    let defaultFood = JSON.parse(localStorage.getItem('defaultFood'));
-
-    if (!defaultFood || !defaultFood[typeRecommendation]) {
-      const defaultMeals = await fetchDefaultMeals();
-      const defaultDrinks = await fetchDefaultDrinks();
-      localStorage.setItem('defaultFood', JSON.stringify({
-        meals: defaultMeals.meals,
-        drinks: defaultDrinks.drinks }));
-    }
-    defaultFood = JSON.parse(localStorage.getItem('defaultFood'));
-    setRecipesRecommendation(defaultFood[typeRecommendation] || []
-      .slice(0, maxNumberOfRecommendation));
-  };
-
-  useEffect(() => {
-    setRecomendations();
-  }, []);
-
-  useEffect(() => {
-  }, [typeRecommendation]);
 
   return (
-    <div className="scroll">
-      {recipesRecommendation.map((recipe, index) => (
-        <div
-          data-testid={ `${index}-recommendation-card` }
-          key={ index }
-          className="quad"
-        >
-          <Link to={ `/${typeRecommendation}/${recipe.idMeal || recipe.idDrink}` }>
-            <h1 data-testid={ `${index}-recommendation-title` }>
-              {recipe.strMeal || recipe.strDrink}
-            </h1>
-          </Link>
-        </div>
-      ))}
-    </div>
+    <section className="scroll">
+      {recipesRecommendation.map((recipe, index) => {
+        const { idMeal, idDrink, strMeal, strDrink } = recipe;
+        const recipeId = idMeal || idDrink;
+        const recipeName = strMeal || strDrink;
+
+        return (
+          <div
+            data-testid={ `${index}-recommendation-card` }
+            key={ recipeId }
+            className="quad"
+          >
+            <Link
+              to={ `/${typeRecommendation}/${recipeId}` }
+              onClick={ () => fetchRecipeDetails(recipeId, typeRecommendation) }
+            >
+              <h1 data-testid={ `${recipeId}-recommendation-title` }>
+                {recipeName}
+              </h1>
+            </Link>
+          </div>
+        );
+      })}
+    </section>
   );
 }
 

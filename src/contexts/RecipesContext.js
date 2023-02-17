@@ -5,7 +5,7 @@ export const RecipesContext = createContext('');
 function RecipesProvider({ children }) {
   const [allRecipes, setAllRecipes] = useState([]);
   const [renderRecipes, setRenderRecipes] = useState([]);
-  const [recipeDetailsRender, setDetailsRender] = useState([]);
+  const [recipeDetailsRender, setRecipeDetailsRender] = useState([]);
   const [recipeIngredients, setRecipeIngredients] = useState([]);
 
   const values = useMemo(() => ({
@@ -15,10 +15,10 @@ function RecipesProvider({ children }) {
     recipeIngredients,
     setAllRecipes,
     setRenderRecipes,
-    setDetailsRender,
+    setRecipeDetailsRender,
     setRecipeIngredients,
   }), [allRecipes, renderRecipes, recipeDetailsRender, recipeIngredients,
-    setAllRecipes, setRenderRecipes, setDetailsRender, setRecipeIngredients]);
+    setAllRecipes, setRenderRecipes, setRecipeDetailsRender, setRecipeIngredients]);
 
   return (
     <RecipesContext.Provider value={ values }>

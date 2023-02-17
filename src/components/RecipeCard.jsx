@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 
 function RecipeCard({ location: { pathname }, recipes }) {
   return (
-    <div>
+    <section>
       {recipes.map((recipe, index) => {
         const { idMeal, idDrink, strMeal,
           strDrink, strMealThumb, strDrinkThumb } = recipe;
@@ -24,7 +24,7 @@ function RecipeCard({ location: { pathname }, recipes }) {
           </Link>
         );
       })}
-    </div>
+    </section>
   );
 }
 RecipeCard.propTypes = {}.isRequired;
