@@ -67,7 +67,6 @@ function FavAndShareButton({ index, recipeId, type, history }) {
           data-testid={ pathname.includes('favorite')
             ? `${index}-horizontal-favorite-btn`
             : 'favorite-btn' }
-          type="imge'svg+xml'"
           src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
           alt={ isFavorite ? 'BlackHeart Icon' : 'WhiteHeart Icon' }
         />

@@ -7,11 +7,18 @@ import Header from '../components/Header';
 import { ButtonsCaterogiriesContext } from '../contexts/ButtonsCategoriesContext';
 
 function DoneRecipes() {
+  const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+
   const { renderDoneRecipes,
     setRenderDoneRecipes } = useContext(ButtonsCaterogiriesContext);
 
+  const updateDoneRecipes = (removeId) => {
+    const newDoneRecipes = doneRecipes.filter((recipe) => recipe.id !== removeId);
+    localStorage.setItem('doneRecipes', JSON.stringify(newDoneRecipes));
+    setRenderDoneRecipes(newDoneRecipes);
+  };
+
   useEffect(() => {
-    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
     setRenderDoneRecipes(doneRecipes);
   }, []);
 
@@ -48,6 +55,13 @@ function DoneRecipes() {
               type={ `${type}s` }
               index={ index }
             />
+
+            <button
+              type="button"
+              onClick={ () => updateDoneRecipes(id) }
+            >
+              Remove Recipe
+            </button>
           </section>
         );
       })}
