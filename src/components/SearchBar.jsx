@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { HeaderContext } from '../contexts/HeaderContext';
 import { RecipesContext } from '../contexts/RecipesContext';
 import { searchFetchDrinks, searchFetchMeals } from '../services/ApiSearchBarSwitch';
+import styles from '../styles/SearchBar.module.css';
 
 function SearchBar({ history }) {
   const { location: { pathname } } = history;
@@ -35,45 +36,53 @@ function SearchBar({ history }) {
   };
 
   return (
-    <section>
-      <label htmlFor="searchBy">
-        <span>Ingredient</span>
-        <input
-          name="searchBy"
-          value="ingredient"
-          data-testid="ingredient-search-radio"
-          type="radio"
-          onChange={ ({ target }) => setSelectedRadioButton(target.value) }
-        />
+    <main className={ styles.containerSearchBar }>
+      <h3>Filter By</h3>
+      <section className={ styles.containerRadioTypes }>
+        <label htmlFor="searchBy">
+          Ingredient
+          <input
+            name="searchBy"
+            value="ingredient"
+            data-testid="ingredient-search-radio"
+            type="radio"
+            onChange={ ({ target }) => setSelectedRadioButton(target.value) }
+          />
+        </label>
 
-        <span>Name</span>
-        <input
-          name="searchBy"
-          value="name"
-          data-testid="name-search-radio"
-          type="radio"
-          onChange={ ({ target }) => setSelectedRadioButton(target.value) }
-        />
+        <label htmlFor="searchBy">
+          Name
+          <input
+            name="searchBy"
+            value="name"
+            data-testid="name-search-radio"
+            type="radio"
+            onChange={ ({ target }) => setSelectedRadioButton(target.value) }
+          />
+        </label>
 
-        <span>First letter</span>
-        <input
-          name="searchBy"
-          value="firstLetter"
-          data-testid="first-letter-search-radio"
-          type="radio"
-          onChange={ ({ target }) => setSelectedRadioButton(target.value) }
-        />
+        <label htmlFor="searchBy">
+          First letter
+          <input
+            name="searchBy"
+            value="firstLetter"
+            data-testid="first-letter-search-radio"
+            type="radio"
+            onChange={ ({ target }) => setSelectedRadioButton(target.value) }
+          />
 
-      </label>
+        </label>
+      </section>
 
       <button
         data-testid="exec-search-btn"
         type="button"
         onClick={ handleSearch }
+        className={ styles.btnSearch }
       >
         Search
       </button>
-    </section>
+    </main>
   );
 }
 

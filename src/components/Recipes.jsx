@@ -6,6 +6,7 @@ import { fetchCategoriesMeals, fetchCategoriesDrinks } from '../services/ApiCate
 import { fetchDefaultDrinks, fetchDefaultMeals } from '../services/ApiDefaultSearchFood';
 import { fetchByCategoryDrinks, fetchByCategoryMeals } from '../services/ApiByCategories';
 import RecipeCard from './RecipeCard';
+import styles from '../styles/Recipes.module.css';
 
 function Recipes({ history: { location: { pathname } } }) {
   const isMealsOrDrinks = pathname.slice(1);
@@ -79,26 +80,35 @@ function Recipes({ history: { location: { pathname } } }) {
   }, [allRecipes]);
 
   return (
-    <section>
-      {initialCategories.map(({ strCategory }) => (
+    <main>
+      <section className={ styles.containerButtons }>
+        <h3>Recommended Categories</h3>
+        <div className={ styles.containerCategories }>
+          {initialCategories.map(({ strCategory }) => (
+            <button
+              key={ strCategory }
+              data-testid={ `${strCategory}-category-filter` }
+              value={ strCategory }
+              onClick={ handleCategoryFilterChange }
+              selected="selected"
+            >
+              {strCategory}
+            </button>
+          ))}
+        </div>
         <button
-          key={ strCategory }
-          data-testid={ `${strCategory}-category-filter` }
-          value={ strCategory }
-          onClick={ handleCategoryFilterChange }
+          className={ styles.btnAllCategories }
+          type="button"
+          data-testid="All-category-filter"
+          onClick={ setDefaultFood }
+          selected="selected"
         >
-          {strCategory}
+          ALL
         </button>
-      ))}
-      <button
-        type="button"
-        data-testid="All-category-filter"
-        onClick={ setDefaultFood }
-      >
-        ALL
-      </button>
+
+      </section>
       {renderRecipes && <RecipeCard recipes={ renderRecipes } />}
-    </section>
+    </main>
   );
 }
 

@@ -1,0 +1,39 @@
+.containerButtons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  border-bottom: 1px dotted black;
+  height: 120px;
+  padding: 10px 0;
+}
+
+.containerButtons h3 {
+  font-weight: bold;
+  font-size: 21px;
+}
+
+.containerCategories {
+  display: flex;
+  width: 98%;
+  gap: 5px;
+}
+
+.containerButtons button {
+  background-color: rgb(184, 182, 182);
+  border-radius: 7px;
+  border: none;
+  width: 98%;
+}
+
+.btnAllCategories {
+  font-size: 18px;
+  margin-top: 3px;
+}
+
+.containerButtons button:active {
+  background-color:  #00b279;
+ }
+
+
