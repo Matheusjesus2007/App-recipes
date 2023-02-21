@@ -1,0 +1,32 @@
+.containerCards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-left: 7px;
+    padding-bottom: 47px;
+}
+
+.containerRecipeCard {
+    display: flex;
+    justify-content: center;
+    width: 45%;
+    height: 170px;
+}
+
+.containerRecipeCard p {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.recipeCard {
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    height: 220px;
+}
+
+.linkStyles {
+    width: 180px;
+    height: 170px;
+}

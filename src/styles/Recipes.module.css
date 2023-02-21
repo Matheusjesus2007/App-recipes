@@ -1,3 +1,10 @@
+.containerRecipes {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  height: 1400px;
+}
+
 .containerButtons {
   display: flex;
   flex-direction: column;
@@ -6,7 +13,8 @@
   text-align: center;
   border-bottom: 1px dotted black;
   height: 120px;
-  padding: 10px 0;
+  padding: 10px 3px;
+  margin-bottom: 0;
 }
 
 .containerButtons h3 {
@@ -16,7 +24,6 @@
 
 .containerCategories {
   display: flex;
-  width: 98%;
   gap: 5px;
 }
 
@@ -24,7 +31,6 @@
   background-color: rgb(184, 182, 182);
   border-radius: 7px;
   border: none;
-  width: 98%;
 }
 
 .btnAllCategories {

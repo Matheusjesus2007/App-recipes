@@ -80,9 +80,9 @@ function Recipes({ history: { location: { pathname } } }) {
   }, [allRecipes]);
 
   return (
-    <main>
+    <main className={ styles.containerRecipes }>
       <section className={ styles.containerButtons }>
-        <h3>Recommended Categories</h3>
+        <h3>Menu Suggestions</h3>
         <div className={ styles.containerCategories }>
           {initialCategories.map(({ strCategory }) => (
             <button
@@ -105,7 +105,6 @@ function Recipes({ history: { location: { pathname } } }) {
         >
           ALL
         </button>
-
       </section>
       {renderRecipes && <RecipeCard recipes={ renderRecipes } />}
     </main>
