@@ -1,11 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { RecipesContext } from '../contexts/RecipesContext';
 import { setStartRecipeStorage } from '../helpers/SetStorageFunctions';
 import { fetchRecipeDetailsAux,
   filterIngredientsAux } from '../helpers/fetchDetailsAndFilter';
 import FavAndShareButton from './FavAndShareButton';
 import Recommendations from './Recommendations';
+import styles from '../styles/RecipeDetails.module.css';
 
 function RecipeDetails({ history, match }) {
   const { params: { id } } = match;
@@ -21,10 +23,12 @@ function RecipeDetails({ history, match }) {
   const [recipesRecommendation, setRecipesRecommendation] = useState([]);
   const [buttonContinueRecipe, setButtonContinueRecipe] = useState(false);
 
-  const { strImageSource, strMeal, strDrink, strCategory, strAlcoholic,
+  const { strMealThumb, strDrinkThumb, strMeal, strDrink, strCategory, strAlcoholic,
     strInstructions, strYoutube, idMeal, idDrink } = recipeDetailsRender;
   const recipeId = idMeal || idDrink;
   const title = strMeal || strDrink;
+  const recipeThumb = strMealThumb || strDrinkThumb;
+  const video = strYoutube && strYoutube.replace('watch?v=', 'embed/');
 
   const fetchRecipeDetails = async (newRecipeId, recipeType) => {
     const recipeDetailsFetch = await fetchRecipeDetailsAux(newRecipeId, recipeType);
@@ -68,36 +72,54 @@ function RecipeDetails({ history, match }) {
   }, [recipeDetailsRender]);
 
   return (
-    <section>
-      <img src={ strImageSource } alt="" data-testid="recipe-photo" />
-      <h1 data-testid="recipe-title">{title}</h1>
-      <p data-testid="recipe-category">
-        {`${strCategory} - ${strAlcoholic}`}
-      </p>
-      <ol>
-        {recipeIngredients.map((ingredient, index) => (
-          <li
-            data-testid={ `${index}-ingredient-name-and-measure` }
-            key={ index }
-          >
-            {`${Object.keys(ingredient)[0]} 
-            - ${Object.values(ingredient)[0]} `}
-          </li>
-        ))}
-      </ol>
-      <p data-testid="instructions">{strInstructions}</p>
-      {isMealsOrDrinks === 'meals' && <iframe
-        src={ strYoutube }
-        data-testid="video"
-        width="480"
-        height="350"
-        title={ title }
-      />}
+    <div className={ styles.containerDetails }>
+      <div className={ styles.containerTitleCategorie }>
+        <h1 className={ styles.center } data-testid="recipe-title">{title}</h1>
+        <p className={ styles.center } data-testid="recipe-category">
+          {idDrink ? `${strCategory} - ${strAlcoholic}` : strCategory}
+        </p>
+      </div>
 
-      <Recommendations
-        fetchRecipeDetails={ fetchRecipeDetails }
-        recipesRecommendation={ recipesRecommendation }
-      />
+      <img src={ recipeThumb } alt={ title } data-testid="recipe-photo" />
+
+      <div className={ styles.containerIngredients }>
+        <p>Ingredients</p>
+        <ol>
+          {recipeIngredients.map((ingredient, index) => (
+            <li
+              data-testid={ `${index}-ingredient-name-and-measure` }
+              key={ index }
+            >
+              {`${Object.keys(ingredient)[0]} 
+            - ${Object.values(ingredient)[0]} `}
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <div className={ styles.containerIntructions }>
+        <p>instructions:</p>
+        <span data-testid="instructions">{strInstructions}</span>
+      </div>
+
+      {isMealsOrDrinks === 'meals'
+      && (
+        <div className="ratio ratio-16x9">
+          <iframe
+            src={ video }
+            data-testid="video"
+            title={ title }
+          />
+        </div>
+      )}
+
+      <div>
+        <Recommendations
+          fetchRecipeDetails={ fetchRecipeDetails }
+          recipesRecommendation={ recipesRecommendation }
+        />
+      </div>
+
       <FavAndShareButton
         recipeId={ recipeId }
         type={ isMealsOrDrinks }
@@ -110,7 +132,8 @@ function RecipeDetails({ history, match }) {
       >
         {buttonContinueRecipe ? 'Continue Recipes' : 'Start Recipes'}
       </button>
-    </section>
+    </div>
+
   );
 }
 

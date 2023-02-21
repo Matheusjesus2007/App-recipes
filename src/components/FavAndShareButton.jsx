@@ -8,6 +8,7 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import { setFavoriteRecipesStorage } from '../helpers/SetStorageFunctions';
 import { RecipesContext } from '../contexts/RecipesContext';
 import { ButtonsCaterogiriesContext } from '../contexts/ButtonsCategoriesContext';
+import styles from '../styles/FavAndShareButton.module.css';
 
 function FavAndShareButton({ index, recipeId, type, history }) {
   const duration = 500;
@@ -60,7 +61,7 @@ function FavAndShareButton({ index, recipeId, type, history }) {
   });
 
   return (
-    <div>
+    <div className={ styles.containerButtons }>
       {isCopied && <div> Link copied!</div>}
       <button onClick={ handleClickButtonFavorite }>
         <img

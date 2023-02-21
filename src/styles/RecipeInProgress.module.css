@@ -1,0 +1,9 @@
+.containerProgress {
+    display: flex;
+    height: 200px;
+    border: solid red 1px;
+}
+
+.containerProgress p {
+    border: solid red 1px;
+}

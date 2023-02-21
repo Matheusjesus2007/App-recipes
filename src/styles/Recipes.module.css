@@ -40,6 +40,7 @@
 
 .containerButtons button:active {
   background-color:  #00b279;
+  color: white;
  }
 
 

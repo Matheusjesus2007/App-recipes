@@ -5,7 +5,8 @@ import { RecipesContext } from '../contexts/RecipesContext';
 import { setDoneRecipesStorage } from '../helpers/SetStorageFunctions';
 import FavAndShareButton from '../components/FavAndShareButton';
 import { fetchRecipeDetailsAux } from '../helpers/fetchDetailsAndFilter';
-import ProgressIngredients from '../components/IngredientsInProgress';
+import styles from '../styles/RecipeInProgress.module.css';
+import IngredientsInProgress from '../components/IngredientsInProgress';
 
 function RecipeInProgress({ history, match }) {
   const { params: { id } } = match;
@@ -53,7 +54,7 @@ function RecipeInProgress({ history, match }) {
   };
 
   return (
-    <section>
+    <section className={ styles.containerProgress }>
       <h1 data-testid="recipe-title">{title}</h1>
       <p data-testid="recipe-category">
         { strCategory }
@@ -61,7 +62,7 @@ function RecipeInProgress({ history, match }) {
       <img src={ image } alt={ title } data-testid="recipe-photo" />
       <p data-testid="instructions">{strInstructions}</p>
 
-      <ProgressIngredients
+      <IngredientsInProgress
         recipeId={ recipeId }
         updateFinishButtonStatus={ updateFinishButtonStatus }
       />

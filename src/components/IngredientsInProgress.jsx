@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { RecipesContext } from '../contexts/RecipesContext';
 import { filterIngredientsAux } from '../helpers/fetchDetailsAndFilter';
 
-function ProgressIngredients({ location, recipeId, updateFinishButtonStatus }) {
+function IngredientsInProgress({ location, recipeId, updateFinishButtonStatus }) {
   const { pathname } = location;
   const isMealsOrDrinks = pathname.includes('/meals/') ? 'meals' : 'drinks';
 
@@ -69,4 +69,4 @@ function ProgressIngredients({ location, recipeId, updateFinishButtonStatus }) {
   );
 }
 
-export default withRouter(ProgressIngredients);
+export default withRouter(IngredientsInProgress);

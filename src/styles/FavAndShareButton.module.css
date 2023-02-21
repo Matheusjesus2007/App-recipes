@@ -1,0 +1,14 @@
+.containerButtons {
+    display: flex;
+
+}
+
+.containerButtons button {
+    width: 50%;
+    height: 50px;
+}
+
+.containerButtons button img {
+    width: 50%;
+    height: 50px;
+}
