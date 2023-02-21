@@ -8,6 +8,7 @@
 .containerTitleCategorie {
     display: flex;
     text-align: center;
+    padding: 1px;
 }
 
 .center {
@@ -19,7 +20,7 @@
     border: 1px ridge  rgb(184, 182, 182) ;
 }
 
-.containerDetails img {
+.detailsImg {
     width: 360px;
     height: 300px;
 }
@@ -57,3 +58,13 @@ li {
     font-size: 18px;
     margin-bottom: 10px;
 }
+
+.titleCarousel {
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    height: 24px;
+    margin-top: 9px;
+    margin: 1px;
+}
+

@@ -80,7 +80,12 @@ function RecipeDetails({ history, match }) {
         </p>
       </div>
 
-      <img src={ recipeThumb } alt={ title } data-testid="recipe-photo" />
+      <img
+        className={ styles.detailsImg }
+        src={ recipeThumb }
+        alt={ title }
+        data-testid="recipe-photo"
+      />
 
       <div className={ styles.containerIngredients }>
         <p>Ingredients</p>
@@ -114,6 +119,7 @@ function RecipeDetails({ history, match }) {
       )}
 
       <div>
+        <p className={ styles.titleCarousel }>suggested recipes</p>
         <Recommendations
           fetchRecipeDetails={ fetchRecipeDetails }
           recipesRecommendation={ recipesRecommendation }

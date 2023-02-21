@@ -64,7 +64,7 @@ function Login({ history }) {
             value={ user.email }
           />
         </label>
-        <p className={ styles.errorMessage }>{errorMessageEmail}</p>
+        <span className={ styles.errorMessage }>{errorMessageEmail}</span>
         <label
           htmlFor="input-senha"
           className={ styles.labelPass }
@@ -91,7 +91,7 @@ function Login({ history }) {
             />
           </button>
         </label>
-        <p className={ styles.errorMessage }>{errorMessagePassword}</p>
+        <span className={ styles.errorMessage }>{errorMessagePassword}</span>
         <label htmlFor="input-remember" className={ styles.containerRemember }>
           Remember me
           <input
