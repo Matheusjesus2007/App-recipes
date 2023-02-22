@@ -133,7 +133,7 @@ function RecipeDetails({ history, match }) {
       <button
         type="button"
         data-testid="start-recipe-btn"
-        className="start-button"
+        className={ styles.startButton }
         onClick={ handleStartOrContinueRecipe }
       >
         {buttonContinueRecipe ? 'Continue Recipes' : 'Start Recipes'}

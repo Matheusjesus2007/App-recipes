@@ -3,8 +3,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import clipboardCopy from 'clipboard-copy';
 import { withRouter } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import redHeartIcon from '../images/redHeartIcon.png';
 import { setFavoriteRecipesStorage } from '../helpers/SetStorageFunctions';
 import { RecipesContext } from '../contexts/RecipesContext';
 import { ButtonsCaterogiriesContext } from '../contexts/ButtonsCategoriesContext';
@@ -70,7 +70,7 @@ function FavAndShareButton({ index, recipeId, type, history }) {
           data-testid={ pathname.includes('favorite')
             ? `${index}-horizontal-favorite-btn`
             : 'favorite-btn' }
-          src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+          src={ isFavorite ? redHeartIcon : whiteHeartIcon }
           alt={ isFavorite ? 'BlackHeart Icon' : 'WhiteHeart Icon' }
         />
       </button>

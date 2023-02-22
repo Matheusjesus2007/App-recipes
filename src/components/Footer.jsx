@@ -24,7 +24,6 @@ function Footer() {
           alt="Meal Icon"
         />
       </Link>
-
     </footer>
   );
 }

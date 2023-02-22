@@ -1,21 +1,25 @@
 .containerButtons {
     display: flex;
-    height: 40px; 
+    height: 70px; 
+    padding: 2px;
+    padding-bottom: 30px;
+    background-color: rgb(184, 182, 182) ;
 }
 
 .favoriteButton {
     width: 50%;
     border: none;
-    background-color: rgb(184, 182, 182) ;
-    padding: 1px;
+    border-right: solid 2px rgb(184, 182, 182) ;
+}
+
+.favoriteButton img {
+    width: 40px;
 }
 
 .shareButton {
     display: flex;
     width: 50%;
     border: none;
-    background-color: rgb(184, 182, 182) ;
-    padding: 1px;
 } 
 
 .shareButton span {
