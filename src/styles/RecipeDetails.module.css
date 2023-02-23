@@ -2,13 +2,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 20px;
 }
 
 .containerTitleCategorie {
     display: flex;
     text-align: center;
-    padding: 1px;
 }
 
 .center {
@@ -49,6 +47,7 @@ li {
     display: flex;
     flex-direction: column;
     text-align: justify;
+    height: auto;
     padding: 0px 15px;
 }
 
