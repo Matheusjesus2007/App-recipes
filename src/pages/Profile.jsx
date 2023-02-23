@@ -3,10 +3,12 @@ import { withRouter } from 'react-router';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import styles from '../styles/Profile.module.css';
-import foods from '../images/banquete.jpg';
+import Recommendations from '../components/Recommendations';
+import { fetchDetailsDrinks, fetchDetailstMeals } from '../services/ApiRecipeDetails';
 
 function Profile({ history }) {
   const user = JSON.parse(localStorage.getItem('user'));
+  const defaultFood = JSON.parse(localStorage.getItem('defaultFood'));
 
   const logoutUserAndClearLocalStorage = () => {
     localStorage.clear();
@@ -64,8 +66,18 @@ function Profile({ history }) {
           </Link>
         </div>
       </div>
-      <div className={ styles.wallpaperChef }>
-        <img src={ foods } alt="cozinheiro" />
+
+      <div className={ styles.containerRecommendationsProfile }>
+        <p className={ styles.titleCarousel }>suggested recipes Meals</p>
+        <Recommendations
+          recipesRecommendation={ defaultFood.meals }
+          fetchRecipeDetails={ fetchDetailstMeals }
+        />
+        <p className={ styles.titleCarousel }>suggested recipes Drinks</p>
+        <Recommendations
+          recipesRecommendation={ defaultFood.drinks }
+          fetchRecipeDetails={ fetchDetailsDrinks }
+        />
       </div>
       <Footer />
     </section>
