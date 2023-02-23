@@ -1,7 +1,8 @@
 .containerIngredients {
     display: flex; 
     flex-direction: column;
-    padding: 5px 5px;  
+    padding: 5px 0;
+    padding-left: 15px;  
 }
 
 .containerIngredients p {

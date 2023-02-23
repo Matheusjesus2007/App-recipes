@@ -4,27 +4,38 @@
     text-align: center;
     height: auto;
     margin-bottom: 50px;
+    border: solid black 1px;
 }
 
 .containerDoneRecipes h1 {
   margin: 0;
 }
 
-.containerDoneRecipes p {
+
+.containerTopText {
+    padding: 1px;
+}
+
+
+.containerTopText p {
     margin: 1px;
 }
 
 .linkDoneRecipes {
     text-decoration: none;
     color: black;
-    border: solid black 1px;
+}
+
+.linkDoneRecipes img {
+    width: 358px;
+    height: 300px;
 }
 
 .removeButton {
     background-color:  rgb(184, 182, 182) ;
     color: black;
     border: none;
-    border-radius: 7px;
     height: 30px;
-    margin-top: -30px;
 }
+
+

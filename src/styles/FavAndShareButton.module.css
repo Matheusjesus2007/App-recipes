@@ -6,6 +6,11 @@
     background-color: rgb(184, 182, 182) ;
 }
 
+.containerButtonsOut {
+    height: 40px; 
+    padding-bottom: 0px;
+}
+
 .favoriteButton {
     width: 50%;
     border: none;

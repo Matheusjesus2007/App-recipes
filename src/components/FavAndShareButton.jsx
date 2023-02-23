@@ -9,10 +9,10 @@ import { setFavoriteRecipesStorage } from '../helpers/SetStorageFunctions';
 import { RecipesContext } from '../contexts/RecipesContext';
 import { ButtonsCaterogiriesContext } from '../contexts/ButtonsCategoriesContext';
 import styles from '../styles/FavAndShareButton.module.css';
+import { fetchDetailsDrinks, fetchDetailstMeals } from '../services/ApiRecipeDetails';
 
 function FavAndShareButton({ index, recipeId, type, history }) {
   const duration = 500;
-  const defaultFood = JSON.parse(localStorage.getItem('defaultFood'));
   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
 
   const { location: { pathname } } = history;
@@ -37,11 +37,12 @@ function FavAndShareButton({ index, recipeId, type, history }) {
     setRenderFavoriteRecipes(newFavoriteRecipes);
   };
 
-  const addFavoriteRecipe = () => {
-    const idItem = type === 'meals' ? 'idMeal' : 'idDrink';
+  const addFavoriteRecipe = async () => {
     if (recipeDetailsRender.length === 0) {
-      const defaultFoodAux = defaultFood[type].find((food) => food[idItem] === recipeId);
-      return setFavoriteRecipesStorage(defaultFoodAux);
+      const fetchFood = type === 'meals' ? fetchDetailstMeals : fetchDetailsDrinks;
+      const defaultFoodAux = await fetchFood(recipeId);
+      setIsFavorite(!isFavorite);
+      return setFavoriteRecipesStorage(defaultFoodAux[type][0]);
     }
     setFavoriteRecipesStorage(recipeDetailsRender);
   };
@@ -61,7 +62,13 @@ function FavAndShareButton({ index, recipeId, type, history }) {
   });
 
   return (
-    <div className={ styles.containerButtons }>
+    <div
+      className={
+        pathname.includes('favorite') || pathname.includes('done')
+          ? `${styles.containerButtons} ${styles.containerButtonsOut} `
+          : styles.containerButtons
+      }
+    >
       <button
         className={ styles.favoriteButton }
         onClick={ handleClickButtonFavorite }

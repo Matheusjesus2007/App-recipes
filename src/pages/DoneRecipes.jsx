@@ -32,7 +32,7 @@ function DoneRecipes() {
           type, name, doneDate, alcoholicOrNot } = recipe;
 
         return (
-          <section key={ index } className={ styles.containerDoneRecipes }>
+          <section key={ id } className={ styles.containerDoneRecipes }>
             <Link
               className={ styles.linkDoneRecipes }
               to={ `${type}s/${id}` }
@@ -40,31 +40,30 @@ function DoneRecipes() {
               <h1 data-testid={ `${index}-horizontal-name` }>{ name }</h1>
               <img
                 src={ image }
-                alt=""
+                alt={ name }
                 data-testid={ `${index}-horizontal-image` }
               />
-
             </Link>
-            <div data-testid={ `${index}-horizontal-top-text` }>
+            <div
+              className={ styles.containerTopText }
+              data-testid={ `${index}-horizontal-top-text` }
+            >
               {type === 'drink'
                 ? (
-                  <div className={ styles.containerTopText }>
+                  <div>
                     <p>{`Category: ${category}`}</p>
                     <p>{`Alcoholic: ${alcoholicOrNot}`}</p>
+
                   </div>
                 ) : (
                   <div>
                     <p>{`Category: ${category}`}</p>
                     <p>{`Nationality: ${nationality}`}</p>
-                  </div>)}
-            </div>
 
-            <p
-              data-testid={ `${index}-horizontal-done-date` }
-            >
-              <span>Completion date: </span>
-              { doneDate }
-            </p>
+                  </div>)}
+
+              <p>{`Completion date: ${doneDate} `}</p>
+            </div>
 
             <FavAndShareButton
               curRecipe={ recipe }

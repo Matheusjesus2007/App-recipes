@@ -1,0 +1,28 @@
+.containerFavoriteRecipes {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    height: auto;
+    margin-bottom: 50px;
+    border: solid black 1px;
+}
+
+
+.linkFavoriteRecipes {
+    text-decoration: none;
+    color: black;
+}
+
+.linkFavoriteRecipes img {
+    width: 358px;
+    height: 300px;
+}
+
+.containerTopText {
+    padding: 1px;
+}
+
+
+.containerTopText p {
+    margin: 1px;
+}
