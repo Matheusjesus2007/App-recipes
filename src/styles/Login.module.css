@@ -83,7 +83,7 @@
 }
 
 .buttonSingIn:disabled {
-  background-color: #CCC;
-  color: #888;
+  background-color: #ddd;
+  color: #999; 
   margin-bottom: 5px;
 } 

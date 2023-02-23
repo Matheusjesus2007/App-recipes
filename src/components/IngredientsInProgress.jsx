@@ -3,6 +3,7 @@ import React, { useContext, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { RecipesContext } from '../contexts/RecipesContext';
 import { filterIngredientsAux } from '../helpers/fetchDetailsAndFilter';
+import styles from '../styles/IngredientsInProgress.module.css';
 
 function IngredientsInProgress({ location, recipeId, updateFinishButtonStatus }) {
   const { pathname } = location;
@@ -46,27 +47,31 @@ function IngredientsInProgress({ location, recipeId, updateFinishButtonStatus })
   }, [recipeDetailsRender]);
 
   return (
-    recipeIngredients.map((ingredient, index) => (
-      <section key={ index }>
-        <label
-          htmlFor={ `checkbox-${index}` }
-          data-testid={ `${index}-ingredient-step` }
-          className={ checkIngredient(Object.keys(ingredient)[0]) ? 'completed' : '' }
-        >
-          {`${Object.keys(ingredient)[0]} 
-            - ${Object.values(ingredient)[0]} `}
+    <section className={ styles.containerIngredients }>
+      <p>Recipe Progress Tracker</p>
+      { recipeIngredients.map((ingredient, index) => (
+        <section key={ index }>
+          <label
+            htmlFor={ `checkbox-${index}` }
+            data-testid={ `${index}-ingredient-step` }
+            className={ checkIngredient(Object.keys(ingredient)[0]) ? 'completed' : '' }
+          >
+            {`${Object.keys(ingredient)[0]} - ${Object.values(ingredient)[0]}: `}
 
-          <input
-            type="checkbox"
-            id={ `checkbox-${index}` }
-            checked={ checkIngredient(Object.keys(ingredient)[0]) }
-            onChange={ () => handleCheckboxChange(Object.keys(ingredient)[0]) }
-          />
-        </label>
+            <input
+              type="checkbox"
+              id={ `checkbox-${index}` }
+              checked={ checkIngredient(Object.keys(ingredient)[0]) }
+              onChange={ () => handleCheckboxChange(Object.keys(ingredient)[0]) }
+            />
+          </label>
 
-      </section>
-    ))
+        </section>
+      ))}
+    </section>
   );
 }
+
+IngredientsInProgress.propTypes = {}.isRequired;
 
 export default withRouter(IngredientsInProgress);

@@ -72,7 +72,7 @@ function RecipeDetails({ history, match }) {
   }, [recipeDetailsRender]);
 
   return (
-    <div className={ styles.containerDetails }>
+    <section className={ styles.containerDetails }>
       <div className={ styles.containerTitleCategorie }>
         <h1 className={ styles.center } data-testid="recipe-title">{title}</h1>
         <p className={ styles.center } data-testid="recipe-category">
@@ -138,7 +138,7 @@ function RecipeDetails({ history, match }) {
       >
         {buttonContinueRecipe ? 'Continue Recipes' : 'Start Recipes'}
       </button>
-    </div>
+    </section>
 
   );
 }

@@ -23,31 +23,32 @@ function Header({ title }) {
       >
         {title}
       </h1>
-      <div className={ styles.inputSearch }>
-        { isSearchableTitle && (
-          <button
-            type="button"
-            onClick={ () => setInputSearchEnabled(!isInputSearchEnabled) }
-          >
-            <img
-              data-testid="search-top-btn"
-              src={ searchIcon }
-              alt="Ícone de busca"
-            />
-          </button>
-        )}
-        {isInputSearchEnabled && (
+      { isSearchableTitle && (
+        <div className={ styles.inputSearch }>
+          { isSearchableTitle && (
+            <button
+              type="button"
+              onClick={ () => setInputSearchEnabled(!isInputSearchEnabled) }
+            >
+              <img
+                data-testid="search-top-btn"
+                src={ searchIcon }
+                alt="Ícone de busca"
+              />
+            </button>
+          )}
+          {isInputSearchEnabled && (
 
-          <input
-            name="teste"
-            data-testid="search-input"
-            type="text"
-            placeholder="Type Here"
-            value={ inputSearchValue }
-            onChange={ ({ target }) => setInputSearchValue(target.value) }
-          />
-        )}
-      </div>
+            <input
+              name="teste"
+              data-testid="search-input"
+              type="text"
+              placeholder="Type Here"
+              value={ inputSearchValue }
+              onChange={ ({ target }) => setInputSearchValue(target.value) }
+            />
+          )}
+        </div>)}
     </header>
   );
 }

@@ -44,7 +44,7 @@ export const setDoneRecipesStorage = (recipeDetailsRender) => {
     image: recipeDetailsRender.idMeal
       ? recipeDetailsRender.strMealThumb
       : recipeDetailsRender.strDrinkThumb,
-    doneDate: new Date().toISOString(),
+    doneDate: new Date().toLocaleString(),
     tags: recipeDetailsRender.strTags
       ? recipeDetailsRender.strTags.split(',')
       : [],

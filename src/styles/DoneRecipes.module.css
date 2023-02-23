@@ -1,0 +1,30 @@
+.containerDoneRecipes {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    height: auto;
+    margin-bottom: 50px;
+}
+
+.containerDoneRecipes h1 {
+  margin: 0;
+}
+
+.containerDoneRecipes p {
+    margin: 1px;
+}
+
+.linkDoneRecipes {
+    text-decoration: none;
+    color: black;
+    border: solid black 1px;
+}
+
+.removeButton {
+    background-color:  rgb(184, 182, 182) ;
+    color: black;
+    border: none;
+    border-radius: 7px;
+    height: 30px;
+    margin-top: -30px;
+}

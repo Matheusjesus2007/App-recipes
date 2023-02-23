@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 import { ButtonsCaterogiriesContext } from '../contexts/ButtonsCategoriesContext';
+import styles from '../styles/FilterMealOrDrink.module.css';
 
 function FilterMealOrDrink({ history: { location: { pathname } } }) {
   const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
@@ -22,16 +23,7 @@ function FilterMealOrDrink({ history: { location: { pathname } } }) {
   };
 
   return (
-    <>
-      <button
-        type="button"
-        data-testid="filter-by-all-btn"
-        value="all"
-        onClick={ showAllSavedRecipes }
-      >
-        All
-      </button>
-
+    <section className={ styles.ContainerFilterMealOrDrink }>
       <button
         type="button"
         data-testid="filter-by-meal-btn"
@@ -49,7 +41,16 @@ function FilterMealOrDrink({ history: { location: { pathname } } }) {
       >
         Drinks
       </button>
-    </>
+
+      <button
+        type="button"
+        data-testid="filter-by-all-btn"
+        value="all"
+        onClick={ showAllSavedRecipes }
+      >
+        All
+      </button>
+    </section>
   );
 }
 

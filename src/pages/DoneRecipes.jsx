@@ -5,6 +5,7 @@ import FavAndShareButton from '../components/FavAndShareButton';
 import FilterMealOrDrink from '../components/FilterMealOrDrink';
 import Header from '../components/Header';
 import { ButtonsCaterogiriesContext } from '../contexts/ButtonsCategoriesContext';
+import styles from '../styles/DoneRecipes.module.css';
 
 function DoneRecipes() {
   const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
@@ -28,26 +29,42 @@ function DoneRecipes() {
       <FilterMealOrDrink />
       {renderDoneRecipes.map((recipe, index) => {
         const { image, nationality, category, id,
-          type, name, doneDate, tags, alcoholicOrNot } = recipe;
+          type, name, doneDate, alcoholicOrNot } = recipe;
 
         return (
-          <section key={ index }>
+          <section key={ index } className={ styles.containerDoneRecipes }>
             <Link
+              className={ styles.linkDoneRecipes }
               to={ `${type}s/${id}` }
             >
+              <h1 data-testid={ `${index}-horizontal-name` }>{ name }</h1>
               <img
                 src={ image }
                 alt=""
                 data-testid={ `${index}-horizontal-image` }
               />
-              <p data-testid={ `${index}-horizontal-name` }>{ name }</p>
+
             </Link>
-            <p data-testid={ `${index}-horizontal-top-text` }>
-              {type === 'drink' ? alcoholicOrNot : `${nationality} - ${category}`}
+            <div data-testid={ `${index}-horizontal-top-text` }>
+              {type === 'drink'
+                ? (
+                  <div className={ styles.containerTopText }>
+                    <p>{`Category: ${category}`}</p>
+                    <p>{`Alcoholic: ${alcoholicOrNot}`}</p>
+                  </div>
+                ) : (
+                  <div>
+                    <p>{`Category: ${category}`}</p>
+                    <p>{`Nationality: ${nationality}`}</p>
+                  </div>)}
+            </div>
+
+            <p
+              data-testid={ `${index}-horizontal-done-date` }
+            >
+              <span>Completion date: </span>
+              { doneDate }
             </p>
-            <p data-testid={ `${index}-horizontal-done-date` }>{ doneDate }</p>
-            <p data-testid={ `${index}-${tags[0]}-horizontal-tag` }>{tags[0]}</p>
-            <p data-testid={ `${index}-${tags[1]}-horizontal-tag` }>{tags[1]}</p>
 
             <FavAndShareButton
               curRecipe={ recipe }
@@ -57,6 +74,7 @@ function DoneRecipes() {
             />
 
             <button
+              className={ styles.removeButton }
               type="button"
               onClick={ () => updateDoneRecipes(id) }
             >

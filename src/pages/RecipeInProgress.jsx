@@ -18,11 +18,11 @@ function RecipeInProgress({ history, match }) {
   const [finishButtonIsDisabled, setFinishButtonIsDisabled] = useState(true);
   const [updateInputs, setUpdateInputs] = useState(false);
 
-  const { strMealThumb, strDrinkThumb, strMeal, strDrink, strCategory,
+  const { strMealThumb, strDrinkThumb, strMeal, strDrink,
     strInstructions, idMeal, idDrink } = recipeDetailsRender;
   const recipeId = idMeal || idDrink;
   const title = strMeal || strDrink;
-  const image = strMealThumb || strDrinkThumb;
+  const recipeThumb = strMealThumb || strDrinkThumb;
 
   const fetchRecipeDetails = async (newRecipeId, recipeType) => {
     const recipeDetailsFetch = await fetchRecipeDetailsAux(newRecipeId, recipeType);
@@ -55,30 +55,42 @@ function RecipeInProgress({ history, match }) {
 
   return (
     <section className={ styles.containerProgress }>
-      <h1 data-testid="recipe-title">{title}</h1>
-      <p data-testid="recipe-category">
-        { strCategory }
-      </p>
-      <img src={ image } alt={ title } data-testid="recipe-photo" />
-      <p data-testid="instructions">{strInstructions}</p>
+      <h1 className={ styles.title } data-testid="recipe-title">{title}</h1>
+
+      <img
+        className={ styles.progressImg }
+        src={ recipeThumb }
+        alt={ title }
+        data-testid="recipe-photo"
+      />
+
+      <div className={ styles.containerIntructions }>
+        <p>instructions:</p>
+        <span data-testid="instructions">{strInstructions}</span>
+      </div>
 
       <IngredientsInProgress
         recipeId={ recipeId }
         updateFinishButtonStatus={ updateFinishButtonStatus }
       />
-      <FavAndShareButton
-        recipeId={ recipeId }
-        type={ isMealsOrDrinks }
-      />
 
-      <button
-        type="button"
-        data-testid="finish-recipe-btn"
-        disabled={ finishButtonIsDisabled }
-        onClick={ finishRecipe }
-      >
-        Finalizar Receita
-      </button>
+      <div className={ styles.FavoriteShareFinishButton }>
+        <FavAndShareButton
+          recipeId={ recipeId }
+          type={ isMealsOrDrinks }
+        />
+
+        <button
+          className={ styles.finishButton }
+          type="button"
+          data-testid="finish-recipe-btn"
+          disabled={ finishButtonIsDisabled }
+          onClick={ finishRecipe }
+        >
+          { finishButtonIsDisabled ? 'Complete all steps to finish' : 'Finish Recipe' }
+        </button>
+      </div>
+
     </section>
   );
 }
