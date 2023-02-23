@@ -3,7 +3,6 @@ import { withRouter } from 'react-router';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import styles from '../styles/Profile.module.css';
-import chef from '../images/cozinheiro.jpg';
 import foods from '../images/banquete.jpg';
 
 function Profile({ history }) {
