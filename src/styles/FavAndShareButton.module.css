@@ -12,7 +12,6 @@
 }
 
 .favoriteButton {
-    width: 50%;
     border: none;
     border-right: solid 2px rgb(184, 182, 182) ;
 }
@@ -23,7 +22,6 @@
 
 .shareButton {
     display: flex;
-    width: 50%;
     border: none;
 } 
 

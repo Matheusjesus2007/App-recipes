@@ -6,7 +6,9 @@ import styles from '../styles/Footer.module.css';
 
 function Footer() {
   return (
-    <footer className={ styles.containerFooter } data-testid="footer">
+    <footer
+      className={ styles.containerFooterFixed }
+    >
       <Link to="/drinks">
         <img
           data-testid="drinks-bottom-btn"

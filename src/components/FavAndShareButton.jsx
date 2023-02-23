@@ -69,18 +69,19 @@ function FavAndShareButton({ index, recipeId, type, history }) {
           : styles.containerButtons
       }
     >
-      <button
-        className={ styles.favoriteButton }
-        onClick={ handleClickButtonFavorite }
-      >
-        <img
-          data-testid={ pathname.includes('favorite')
-            ? `${index}-horizontal-favorite-btn`
-            : 'favorite-btn' }
-          src={ isFavorite ? redHeartIcon : whiteHeartIcon }
-          alt={ isFavorite ? 'BlackHeart Icon' : 'WhiteHeart Icon' }
-        />
-      </button>
+      {!pathname.includes('done') && (
+        <button
+          className={ styles.favoriteButton }
+          onClick={ handleClickButtonFavorite }
+        >
+          <img
+            data-testid={ pathname.includes('favorite')
+              ? `${index}-horizontal-favorite-btn`
+              : 'favorite-btn' }
+            src={ isFavorite ? redHeartIcon : whiteHeartIcon }
+            alt={ isFavorite ? 'BlackHeart Icon' : 'WhiteHeart Icon' }
+          />
+        </button>) }
       <button
         className={ styles.shareButton }
         onClick={ handleClickButtonShare }
