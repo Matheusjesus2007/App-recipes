@@ -43,10 +43,10 @@ Instale as dependências:
 Para executar a aplicação, basta rodar o comando:  
 `npm start`
 
-Isso irá iniciar a aplicação no seu navegador padrão. Na tela inicial, você será solicitado a fazer login. Após o login, você será levado à página de receitas, onde poderá navegar pelas diferentes categorias e filtrar receitas por nome, ingrediente ou primeira letra. Cada receita possui uma página de detalhes onde você pode ver informações adicionais. Podera iniciar a receita, marcar as etapas concluídas, favoritar ou compartilhar a receita. Você também pode acessar as páginas de receitas favoritas, receitas feitas ou a tela de perfil, que também tem recomendações personalizadas para você.
+Isso irá iniciar a aplicação no seu navegador padrão. Na tela inicial, você será solicitado a fazer login. Após o login, você será levado à página de receitas, onde poderá navegar pelas diferentes categorias e filtrar receitas por nome, ingrediente ou primeira letra. Cada receita possui uma página de detalhes onde você pode ver informações adicionais. Podera iniciar a receita, marcar as etapas concluídas, favoritar ou compartilhar a receita. Você também pode acessar as páginas de receitas favoritas, receitas feitas ou a tela de perfil, que também tem recomendações!
 
 ### Contato
-Se você tiver alguma dúvida ou precisar de ajuda com o projeto, em contato:  
+Se você tiver alguma dúvida ou precisar de ajuda com o projeto, entre em contato:  
 Email: matheusjesus885@outlook.com  
 LinkedIn: https://www.linkedin.com/in/matheus-alexandrino-dev/  
 
