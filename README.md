@@ -1,5 +1,5 @@
 # Receitas App
-Este projeto é uma aplicação web que permite aos pesquisarr novas receitas. Com uma tela de login, tela de comidas e bebidas com sugestões de receitas ou sugestões de categorias, filtro de receitas, por nome, ingrediente ou primeira letra, além de detalhes completos de cada receita, os usuários podem facilmente encontrar o que estão procurando. Além disso, os usuários podem marcar as etapas concluídas de cada receita, favoritá-las ou compartilhá-las.
+Este projeto é uma aplicação web que permite pesquisar novas receitas. Com uma tela de login, tela de comidas e bebidas com sugestões de receitas ou sugestões de categorias, filtro de receitas, por nome, ingrediente ou primeira letra, além de detalhes completos de cada receita, os usuários podem facilmente encontrar o que estão procurando. Além disso, os usuários podem marcar as etapas concluídas de cada receita, favoritá-las ou compartilhá-las.
 
 ## Tecnologias Utilizadas
 - React
