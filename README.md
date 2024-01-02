@@ -1,6 +1,8 @@
 # Receitas App
 Este projeto é uma aplicação web desenvolvida para resolução 360 x 640, que permite pesquisar novas receitas. Com uma tela de login, tela de comidas e bebidas com sugestões de receitas ou sugestões de categorias, filtro de receitas, por nome, ingrediente ou primeira letra, além de detalhes completos de cada receita, os usuários podem facilmente encontrar o que estão procurando. Além disso, os usuários podem marcar as etapas concluídas de cada receita, favoritá-las ou compartilhá-las.
 
+#### Vídeo de demonstração: https://www.linkedin.com/posts/matheus-alexandrino-dev_ol%C3%A1-pessoal-venho-compartilhar-com-voc%C3%AAs-activity-7038580058004828160-uKOH?utm_source=share&utm_medium=member_desktop
+
 ## Tecnologias Utilizadas
 - React
 - React Router dom
